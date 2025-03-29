@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3172007531514959339}
   m_Layer: 0
-  m_Name: BlueStripesEffect
+  m_Name: StripesHorEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
