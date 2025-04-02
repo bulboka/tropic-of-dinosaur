@@ -57,7 +57,7 @@ public class GameSession : MonoBehaviour
 
                 if (newBodyPart.name == oldBodyPart.name)
                 {
-                    newBodyPart.position = oldBodyPart.position;
+                    //newBodyPart.position = oldBodyPart.position;
                     newBodyPart.rotation = oldBodyPart.rotation;
                     break;
                 }

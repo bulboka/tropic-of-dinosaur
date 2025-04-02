@@ -87,7 +87,7 @@ MonoBehaviour:
   _maxdistanceFromHand: 1
   _viewContainer: {fileID: 6351735843842465821}
   _target: {fileID: 0}
-  _maxDistanceFromCamera: 8
+  _maxDistanceFromCamera: 10
   _airbornForceMult: 0.05
 --- !u!50 &5170527715562291826
 Rigidbody2D:

@@ -98,10 +98,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _randomizePosition: 1
-  _maxShiftX: 0.06
-  _maxShiftY: 0.06
+  _maxShiftX: 0.04
+  _maxShiftY: 0.04
   _randomizeRotation: 1
-  _minAngle: -1.4
-  _maxAngle: 1.4
+  _minAngle: -1.1
+  _maxAngle: 1.1
   _minPerionDuration: 1
   _maxPerionDuration: 1
