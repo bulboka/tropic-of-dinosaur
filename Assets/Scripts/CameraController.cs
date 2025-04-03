@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,6 +6,7 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform _target;
     [SerializeField] private float _smoothTime;
+    [SerializeField] private float _zoomSmoothTime;
     [SerializeField] private float _margin;
     [SerializeField] private Transform _overlayEffectContainer;
     [SerializeField] private Camera _camera;
@@ -48,7 +48,7 @@ public class CameraController : MonoBehaviour
         _maxX = Mathf.Max(_maxX, transform.position.x);
 
         _camera.transform.localPosition = Vector3.SmoothDamp(_camera.transform.localPosition, new Vector3(0, 0, _zoom),
-            ref _innerVelocity, _smoothTime);
+            ref _innerVelocity, _zoomSmoothTime);
     }
 
     public void SetTarget(Transform target)
@@ -87,6 +87,28 @@ public class CameraController : MonoBehaviour
         {
             _zoom = zoomTrigger.Zoom;
             zoomTrigger.gameObject.SetActive(false);
+
+            return;
+        }
+
+        var smoothTimeTrigger = other.gameObject.GetComponent<CameraSmoothTimeTrigger>();
+
+        if (smoothTimeTrigger != null)
+        {
+            _smoothTime = smoothTimeTrigger.SmoothTime;
+            smoothTimeTrigger.gameObject.SetActive(false);
+
+            return;
+        }
+
+        var marginTrigger = other.gameObject.GetComponent<CameraMarginTrigger>();
+
+        if (marginTrigger != null)
+        {
+            _margin = marginTrigger.Margin;
+            marginTrigger.gameObject.SetActive(false);
+
+            return;
         }
     }
 

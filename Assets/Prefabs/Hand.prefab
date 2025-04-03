@@ -88,7 +88,7 @@ MonoBehaviour:
   _viewContainer: {fileID: 6351735843842465821}
   _target: {fileID: 0}
   _maxDistanceFromCamera: 10
-  _airbornForceMult: 0.05
+  _airbornForceMult: 0.01
 --- !u!50 &5170527715562291826
 Rigidbody2D:
   serializedVersion: 4
@@ -114,7 +114,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!58 &4488426606033043515
 CircleCollider2D:

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GameSession : MonoBehaviour
@@ -7,8 +8,11 @@ public class GameSession : MonoBehaviour
     [SerializeField] private AudioSource _music;
     [SerializeField] private StartUI _startUI;
     [SerializeField] private CameraController _camera;
+    [SerializeField] private bool _useCheatStartLocator;
+    [SerializeField] private Transform _cheatStartLocator;
 
     private static GameSession _instance;
+    private bool _isTimeCheatActive;
 
     public static Hand Hand => _instance._hand;
 
@@ -19,6 +23,11 @@ public class GameSession : MonoBehaviour
     private void Start()
     {
         _instance = this;
+
+        if (_useCheatStartLocator)
+        {
+            _body.transform.position = _cheatStartLocator.position;
+        }
 
         _body.Initialize();
         _hand.IsInputEnabled = false;
@@ -57,7 +66,7 @@ public class GameSession : MonoBehaviour
 
                 if (newBodyPart.name == oldBodyPart.name)
                 {
-                    //newBodyPart.position = oldBodyPart.position;
+                    newBodyPart.position = oldBodyPart.position;
                     newBodyPart.rotation = oldBodyPart.rotation;
                     break;
                 }
@@ -68,5 +77,14 @@ public class GameSession : MonoBehaviour
         _instance._body = newBody;
 
         _instance._body.Hand.IsInputEnabled = true;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            _isTimeCheatActive = !_isTimeCheatActive;
+            Time.timeScale = _isTimeCheatActive ? 10f : 1f;
+        }
     }
 }

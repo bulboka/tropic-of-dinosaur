@@ -10,6 +10,10 @@ public class RollingFollower : MonoBehaviour
     [SerializeField] private float _sleepDistance;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private float _activationDistance;
+    [SerializeField] private float _dragOnGround;
+    [SerializeField] private float _dragNotOnGround;
+    [SerializeField] private float _notOnGroundForce;
+    [SerializeField] private float _notOnGroundTorque;
 
     private float _minDistSqr;
     private float _maxDistSqr;
@@ -18,6 +22,8 @@ public class RollingFollower : MonoBehaviour
     private float _activationDistanceSqr;
     private bool _isAwake;
     private bool _isActivated;
+    private ContactPoint2D[] _contactPoints;
+    private ContactFilter2D _contactFilter;
 
     private bool IsAwake
     {
@@ -41,11 +47,16 @@ public class RollingFollower : MonoBehaviour
         _awakeDistanceSqr = Mathf.Pow(_awakeDistance, 2);
         _sleepDistanceSqr = Mathf.Pow(_sleepDistance, 2);
         _activationDistanceSqr = Mathf.Pow(_activationDistance, 2);
+
+        _contactPoints = new ContactPoint2D[20];
+        _contactFilter = new ContactFilter2D();
+        _contactFilter.SetLayerMask(LayerMask.GetMask("Ground"));
     }
 
     private void Update()
     {
-        var distToPlayerSqr = (GameSession.Body.Torso.position - transform.position).sqrMagnitude;
+        var toPlayerVector = GameSession.Body.Torso.position - transform.position;
+        var distToPlayerSqr = toPlayerVector.sqrMagnitude;
 
         if (!IsAwake && distToPlayerSqr < _awakeDistanceSqr)
         {
@@ -75,6 +86,16 @@ public class RollingFollower : MonoBehaviour
             _spriteRenderer.sortingOrder = 1;
         }
 
-        _rigidbody.AddTorque(GameSession.Body.Torso.position.x > transform.position.x ? -_torque : _torque);
+        var isOnGround = _rigidbody.GetContacts(_contactFilter, _contactPoints) > 0;
+        _rigidbody.drag = isOnGround ? _dragOnGround : _dragNotOnGround;
+
+        var torque = (GameSession.Body.Torso.position.x > transform.position.x ? -1 : 1) *
+                     (isOnGround ? _torque : _notOnGroundTorque) * Time.deltaTime;
+        _rigidbody.AddTorque(torque);
+
+        if (!isOnGround)
+        {
+            _rigidbody.AddForce(toPlayerVector.normalized * (_notOnGroundForce * Time.deltaTime));
+        }
     }
 }
