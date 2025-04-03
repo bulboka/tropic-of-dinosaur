@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6398435895424961392}
   - component: {fileID: 5669060068802125431}
   - component: {fileID: 4466560388223764358}
-  m_Layer: 13
+  m_Layer: 9
   m_Name: LulkaCloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,7 +257,7 @@ AreaEffector2D:
     m_Bits: 2112
   m_UseGlobalAngle: 0
   m_ForceAngle: 90
-  m_ForceMagnitude: 30
+  m_ForceMagnitude: 10
   m_ForceVariation: 0
   m_ForceTarget: 0
   m_Drag: 0

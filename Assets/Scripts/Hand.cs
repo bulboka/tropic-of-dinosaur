@@ -36,14 +36,6 @@ public class Hand : MonoBehaviour
     private void Start()
     {
         _desiredPosition = transform.position;
-
-#if UNITY_EDITOR
-
-#else
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Screen.SetResolution(1600, 1200, FullScreenMode.FullScreenWindow);
-#endif
     }
 
     private void Update()

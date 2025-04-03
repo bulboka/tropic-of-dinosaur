@@ -33,11 +33,25 @@ public class GameSession : MonoBehaviour
         _hand.IsInputEnabled = false;
         _startUI.Show();
         _startUI.OnComplete += OnStartUIComplete;
+
+#if UNITY_EDITOR
+
+#else
+        Screen.SetResolution(1600, 1200, FullScreenMode.FullScreenWindow);
+#endif
     }
 
     private void OnStartUIComplete()
     {
         _startUI.OnComplete -= OnStartUIComplete;
+
+#if UNITY_EDITOR
+
+#else
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+#endif
+
         _hand.IsInputEnabled = true;
         _music.Play();
     }
