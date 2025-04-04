@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameSession : MonoBehaviour
@@ -13,12 +13,15 @@ public class GameSession : MonoBehaviour
 
     private static GameSession _instance;
     private bool _isTimeCheatActive;
+    private List<GameObject> _usedHandViewPrefabs = new List<GameObject>();
 
     public static Hand Hand => _instance._hand;
 
     public static Body Body => _instance._body;
 
     public static CameraController Camera => _instance._camera;
+
+    public static List<GameObject> UsedHandViewPrefabs => _instance._usedHandViewPrefabs;
 
     private void Start()
     {
