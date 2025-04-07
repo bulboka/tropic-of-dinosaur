@@ -13,7 +13,8 @@ public class GameSession : MonoBehaviour
 
     private static GameSession _instance;
     private bool _isTimeCheatActive;
-    private List<GameObject> _usedHandViewPrefabs = new List<GameObject>();
+    private readonly List<GameObject> _usedHandViewPrefabs = new();
+    private readonly List<StickyObject> _stuckObjects = new();
 
     public static Hand Hand => _instance._hand;
 
@@ -22,6 +23,8 @@ public class GameSession : MonoBehaviour
     public static CameraController Camera => _instance._camera;
 
     public static List<GameObject> UsedHandViewPrefabs => _instance._usedHandViewPrefabs;
+
+    public static List<StickyObject> StuckObjects => _instance._stuckObjects;
 
     private void Start()
     {
@@ -61,6 +64,13 @@ public class GameSession : MonoBehaviour
 
     public static void SwitchBody(Body bodyPrefab)
     {
+        foreach (var stuckObject in StuckObjects)
+        {
+            stuckObject.Unstick();
+        }
+
+        StuckObjects.Clear();
+
         var newBody = Instantiate(bodyPrefab);
 
         newBody.transform.position = _instance._hand.transform.position - newBody.Hand.transform.localPosition;
@@ -73,7 +83,9 @@ public class GameSession : MonoBehaviour
         Destroy(_instance._hand.gameObject);
         _instance._hand = newBody.Hand;
 
-        for (var i = 0; i < _instance._body.SkeletonRoot.childCount; i++)
+        ProcessBone(newBody.RootBone, newBody.SkeletonRoot, _instance._body.SkeletonRoot);
+
+        /*for (var i = 0; i < _instance._body.SkeletonRoot.childCount; i++)
         {
             var oldBodyPart = _instance._body.SkeletonRoot.GetChild(i);
 
@@ -88,12 +100,51 @@ public class GameSession : MonoBehaviour
                     break;
                 }
             }
-        }
+        }*/
 
         Destroy(_instance._body.gameObject);
         _instance._body = newBody;
 
         _instance._body.Hand.IsInputEnabled = true;
+    }
+
+    private static void ProcessBone(Transform newBone, Transform newBonesContainer, Transform oldBonesContainer)
+    {
+        var oldBone = oldBonesContainer.Find(newBone.name);
+
+        if (oldBone == default)
+        {
+            return;
+        }
+
+        newBone.transform.rotation = oldBone.rotation;
+
+        var joint = newBone.GetComponent<HingeJoint2D>();
+
+        if (joint == null)
+        {
+            newBone.position = oldBone.position;
+        }
+        else
+        {
+            var connectedAnchorWorld =
+                joint.connectedBody.transform.TransformPoint(joint.connectedAnchor);
+            var anchorWorld = newBone.TransformPoint(joint.anchor);
+            newBone.position = connectedAnchorWorld/* + (newBonesContainer.position - anchorWorld)*/;
+        }
+
+        var hingedBones = new List<Transform>();
+
+        for (var i = 0; i < newBonesContainer.childCount; i++)
+        {
+            var bone = newBonesContainer.GetChild(i);
+            var boneJoint = bone.GetComponent<HingeJoint2D>();
+
+            if (boneJoint != null && boneJoint.connectedBody.gameObject == newBone.gameObject)
+            {
+                ProcessBone(bone, newBonesContainer, oldBonesContainer);
+            }
+        }
     }
 
     private void Update()

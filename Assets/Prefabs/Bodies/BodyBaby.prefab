@@ -412,6 +412,7 @@ MonoBehaviour:
   _hand: {fileID: 3385755719489820459}
   _torso: {fileID: 7041879213614950089}
   _skeletonRoot: {fileID: 3097908981527636387}
+  _rootBone: {fileID: 4200968843843225578}
 --- !u!1 &1605104403358820420
 GameObject:
   m_ObjectHideFlags: 0

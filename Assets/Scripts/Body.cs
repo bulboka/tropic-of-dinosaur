@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,6 +7,7 @@ public class Body : MonoBehaviour
     [SerializeField] private Hand _hand;
     [SerializeField] private Transform _torso;
     [SerializeField] private Transform _skeletonRoot;
+    [SerializeField] private Transform _rootBone;
 
     public Hand Hand => _hand;
 
@@ -17,10 +17,13 @@ public class Body : MonoBehaviour
 
     public bool IsTouchingGround => _isTouchingGround;
 
+    public Transform RootBone => _rootBone;
+
     private List<Rigidbody2D> _limbs;
     private bool _isInitialized;
     private ContactPoint2D[] _contactPoints;
     private ContactFilter2D _contactFilter;
+    private Collider2D[] _overlapColliders;
     private bool _isTouchingGround;
 
     public void Initialize()
@@ -32,8 +35,10 @@ public class Body : MonoBehaviour
         }
 
         _contactPoints = new ContactPoint2D[20];
+        _overlapColliders = new Collider2D[20];
         _contactFilter = new ContactFilter2D();
-        _contactFilter.SetLayerMask(LayerMask.GetMask("Ground"));
+        _contactFilter.SetLayerMask(LayerMask.GetMask("Ground", "TrapDoor"));
+        _contactFilter.useTriggers = true;
         _limbs = GetComponentsInChildren<Rigidbody2D>().ToList();
         _isInitialized = true;
     }
@@ -45,6 +50,8 @@ public class Body : MonoBehaviour
             return;
         }
 
-        _isTouchingGround = _limbs.Any(limb => limb.GetContacts(_contactFilter, _contactPoints) > 0);
+        _isTouchingGround = _limbs.Any(limb =>
+            limb.GetContacts(_contactFilter, _contactPoints) > 0 ||
+            limb.OverlapCollider(_contactFilter, _overlapColliders) > 0);
     }
 }
