@@ -48,9 +48,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 15
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 1.5
+  m_LinearDrag: 0.7
+  m_AngularDrag: 3
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -124,14 +124,14 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 440.3818, y: -160.69542}
+  m_ConnectedAnchor: {x: -15.118195, y: 7.7045746}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: -80
+    m_LowerAngle: -86
     m_UpperAngle: 0
 --- !u!231 &7862080058949848203
 SpringJoint2D:
@@ -149,10 +149,10 @@ SpringJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0.019434772, y: -17.470568}
-  m_ConnectedAnchor: {x: 440.3881, y: -166.35947}
+  m_ConnectedAnchor: {x: -15.111894, y: 2.0405245}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0
+  m_DampingRatio: 0.6
   m_Frequency: 1
 --- !u!1 &4612941533458355571
 GameObject:
@@ -202,9 +202,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 15
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 1.5
+  m_LinearDrag: 0.7
+  m_AngularDrag: 3
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -278,14 +278,14 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 440.4058, y: -172.4627}
+  m_ConnectedAnchor: {x: -15.094208, y: -4.0627136}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
     m_MaximumMotorForce: 10000
   m_UseLimits: 1
   m_AngleLimits:
-    m_LowerAngle: 81.62
+    m_LowerAngle: 86
     m_UpperAngle: 0
 --- !u!231 &8709379802505242773
 SpringJoint2D:
@@ -303,10 +303,10 @@ SpringJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: -17.49}
-  m_ConnectedAnchor: {x: 440.40714, y: -166.79236}
+  m_ConnectedAnchor: {x: -15.092866, y: 1.6076388}
   m_AutoConfigureDistance: 1
   m_Distance: 0.005
-  m_DampingRatio: 0
+  m_DampingRatio: 0.6
   m_Frequency: 1
 --- !u!1 &6044262169664330771
 GameObject:
@@ -370,7 +370,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.32, y: 0, z: 0}
-  m_LocalScale: {x: 4.5886416, y: 4.5886416, z: 4.5886416}
+  m_LocalScale: {x: 7.1051116, y: 7.1051116, z: 7.1051116}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6485031689900279269}
@@ -415,9 +415,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 08372c22974dd0c48943a05da720636d, type: 3}
-  m_Color: {r: 0, g: 0.4716981, b: 0.0057524103, a: 0.7882353}
+  m_Color: {r: 0.8490566, g: 0.70724094, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

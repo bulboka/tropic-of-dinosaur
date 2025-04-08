@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class ChickenHeartsTrigger : MonoBehaviour
@@ -40,7 +39,7 @@ public class ChickenHeartsTrigger : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireCube(transform.position, new Vector3(_width, _height, 0));
     }

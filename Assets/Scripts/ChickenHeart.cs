@@ -1,7 +1,7 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public enum ChickenHeartState { Sleeping, Awake }
+public enum ChickenHeartState { Sleeping, Awake, FreeFollowing }
 
 public class ChickenHeart : MonoBehaviour
 {
@@ -10,11 +10,14 @@ public class ChickenHeart : MonoBehaviour
     [SerializeField] private float _awakeIdleDurationMax;
     [SerializeField] private float _awakeIdleDurationFastMin;
     [SerializeField] private float _awakeIdleDurationFastMax;
+    [SerializeField] private float _freeFollowIdleDurationMin;
+    [SerializeField] private float _freeFollowIdleDurationMax;
     [SerializeField] private float _awakeMoveDurationMin;
     [SerializeField] private float _awakeMoveDurationMax;
     [SerializeField] private float _moveForce;
     [SerializeField] private float _moveFastForce;
     [SerializeField] private float _randomRadius;
+    [SerializeField] private float _randomRadiusFreeFollow;
 
     private ChickenHeartState _state;
 
@@ -33,9 +36,11 @@ public class ChickenHeart : MonoBehaviour
         set => _state = value;
     }
 
-    private float GetNewIdleDuration() => _isFarFromStartPosition
-        ? Random.Range(_awakeIdleDurationFastMin, _awakeIdleDurationFastMax)
-        : Random.Range(_awakeIdleDurationMin, _awakeIdleDurationMax);
+    private float GetNewIdleDuration() => _state == ChickenHeartState.FreeFollowing
+        ? Random.Range(_freeFollowIdleDurationMin, _freeFollowIdleDurationMax)
+        : _isFarFromStartPosition
+            ? Random.Range(_awakeIdleDurationFastMin, _awakeIdleDurationFastMax)
+            : Random.Range(_awakeIdleDurationMin, _awakeIdleDurationMax);
 
     private float GetNewMoveDuration() => Random.Range(_awakeMoveDurationMin, _awakeMoveDurationMax);
 
@@ -52,6 +57,11 @@ public class ChickenHeart : MonoBehaviour
             return;
         }
 
+        if (_state == ChickenHeartState.FreeFollowing)
+        {
+            _startPosition = GameSession.Body.Torso.position;
+        }
+
         _isFarFromStartPosition = (transform.position - _startPosition).sqrMagnitude > _randomRadiusSqr;
         _isMoving = !_isMoving;
         _nextChangeTime = Time.time + (_isMoving ? GetNewMoveDuration() : GetNewIdleDuration());
@@ -61,8 +71,9 @@ public class ChickenHeart : MonoBehaviour
             return;
         }
 
-        var newTarget =  new Vector3(_startPosition.x + Random.Range(-_randomRadius, _randomRadius),
-                _startPosition.y + Random.Range(-_randomRadius, _randomRadius), _startPosition.z);
+        var randomRadius = _state == ChickenHeartState.FreeFollowing ? _randomRadiusFreeFollow : _randomRadius;
+        var newTarget =  new Vector3(_startPosition.x + Random.Range(-randomRadius, randomRadius),
+                _startPosition.y + Random.Range(-randomRadius, randomRadius), _startPosition.z);
 
         _currentForce = (newTarget - transform.position).normalized * (_isFarFromStartPosition ? _moveFastForce : _moveForce);
     }

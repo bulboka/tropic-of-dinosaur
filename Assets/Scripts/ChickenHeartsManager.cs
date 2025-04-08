@@ -17,4 +17,13 @@ public class ChickenHeartsManager : MonoBehaviour
             heart.GoToTrigger(chickenHeartsTrigger);
         }
     }
+
+    public void FreeHearts()
+    {
+        foreach (var heart in _hearts.Where(heart => heart.State == ChickenHeartState.Awake))
+        {
+            heart.State = ChickenHeartState.FreeFollowing;
+            heart.gameObject.layer = LayerMask.NameToLayer("Ground");
+        }
+    }
 }
