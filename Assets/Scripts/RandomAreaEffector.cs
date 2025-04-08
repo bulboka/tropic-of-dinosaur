@@ -19,6 +19,5 @@ public class RandomAreaEffector : MonoBehaviour
 
         _nextChangeTime = Time.time + Random.Range(_periodDurationMin, _periodDurationMax);
         _areaEffector.forceAngle = Random.Range(_angleMin, _angleMax);
-        Debug.Log($"New angle:{_areaEffector.forceAngle}");
     }
 }

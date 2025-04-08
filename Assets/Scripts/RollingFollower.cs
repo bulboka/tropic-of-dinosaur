@@ -50,7 +50,7 @@ public class RollingFollower : MonoBehaviour
 
         _contactPoints = new ContactPoint2D[20];
         _contactFilter = new ContactFilter2D();
-        _contactFilter.SetLayerMask(LayerMask.GetMask("Ground"));
+        _contactFilter.SetLayerMask(LayerMask.GetMask("Ground", "TrapDoor"));
     }
 
     private void Update()

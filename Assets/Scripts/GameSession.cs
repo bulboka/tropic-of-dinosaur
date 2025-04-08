@@ -10,6 +10,7 @@ public class GameSession : MonoBehaviour
     [SerializeField] private CameraController _camera;
     [SerializeField] private bool _useCheatStartLocator;
     [SerializeField] private Transform _cheatStartLocator;
+    [SerializeField] private ChickenHeartsManager _chickenHeartsManager;
 
     private static GameSession _instance;
     private bool _isTimeCheatActive;
@@ -26,6 +27,8 @@ public class GameSession : MonoBehaviour
 
     public static List<StickyObject> StuckObjects => _instance._stuckObjects;
 
+    public static ChickenHeartsManager ChickenHeartsManager => _instance._chickenHeartsManager;
+
     private void Start()
     {
         _instance = this;
@@ -39,6 +42,7 @@ public class GameSession : MonoBehaviour
         _hand.IsInputEnabled = false;
         _startUI.Show();
         _startUI.OnComplete += OnStartUIComplete;
+        _chickenHeartsManager.Initialize();
 
 #if UNITY_EDITOR
 
