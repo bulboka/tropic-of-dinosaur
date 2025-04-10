@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ChickenHeartsManager : MonoBehaviour
 {
+    [SerializeField] private float _maxFreeFollowDistance;
+
     private List<ChickenHeart> _hearts;
     public void Initialize()
     {
@@ -20,10 +22,23 @@ public class ChickenHeartsManager : MonoBehaviour
 
     public void FreeHearts()
     {
-        foreach (var heart in _hearts.Where(heart => heart.State == ChickenHeartState.Awake))
+        var maxFreeFollowDistanceSqr = Mathf.Pow(_maxFreeFollowDistance, 2);
+
+        for (var i = _hearts.Count - 1; i >= 0; i--)
         {
-            heart.State = ChickenHeartState.FreeFollowing;
-            heart.gameObject.layer = LayerMask.NameToLayer("Ground");
+            var heart = _hearts[i];
+
+            if (heart.State == ChickenHeartState.Awake &&
+                (heart.transform.position - GameSession.Body.Torso.position).sqrMagnitude <= maxFreeFollowDistanceSqr)
+            {
+                heart.State = ChickenHeartState.FreeFollowing;
+                heart.gameObject.layer = LayerMask.NameToLayer("Ground");
+            }
+            else
+            {
+                Destroy(heart.gameObject);
+                _hearts.RemoveAt(i);
+            }
         }
     }
 }

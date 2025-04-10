@@ -200,10 +200,14 @@ MonoBehaviour:
   _freeFollowIdleDurationMax: 1.8
   _awakeMoveDurationMin: 0.5
   _awakeMoveDurationMax: 0.5
+  _freeFollowMoveDurationMin: 0.8
+  _freeFollowMoveDurationMax: 0.8
   _moveForce: 72
   _moveFastForce: 136
+  _moveFreeFollowForce: 230
   _randomRadius: 1.5
   _randomRadiusFreeFollow: 4
+  _freeFollowLiftingForce: 17000
 --- !u!50 &1632457983656951592
 Rigidbody2D:
   serializedVersion: 4
@@ -220,7 +224,7 @@ Rigidbody2D:
   m_LinearDrag: 3
   m_AngularDrag: 0.9
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2c722a1578e6b2d4d8c4cd5c60fe8324, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

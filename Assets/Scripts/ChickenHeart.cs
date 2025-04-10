@@ -14,10 +14,14 @@ public class ChickenHeart : MonoBehaviour
     [SerializeField] private float _freeFollowIdleDurationMax;
     [SerializeField] private float _awakeMoveDurationMin;
     [SerializeField] private float _awakeMoveDurationMax;
+    [SerializeField] private float _freeFollowMoveDurationMin;
+    [SerializeField] private float _freeFollowMoveDurationMax;
     [SerializeField] private float _moveForce;
     [SerializeField] private float _moveFastForce;
+    [SerializeField] private float _moveFreeFollowForce;
     [SerializeField] private float _randomRadius;
     [SerializeField] private float _randomRadiusFreeFollow;
+    [SerializeField] private float _freeFollowLiftingForce;
 
     private ChickenHeartState _state;
 
@@ -42,7 +46,9 @@ public class ChickenHeart : MonoBehaviour
             ? Random.Range(_awakeIdleDurationFastMin, _awakeIdleDurationFastMax)
             : Random.Range(_awakeIdleDurationMin, _awakeIdleDurationMax);
 
-    private float GetNewMoveDuration() => Random.Range(_awakeMoveDurationMin, _awakeMoveDurationMax);
+    private float GetNewMoveDuration() => _state == ChickenHeartState.FreeFollowing
+        ? Random.Range(_freeFollowMoveDurationMin, _freeFollowMoveDurationMax)
+        : Random.Range(_awakeMoveDurationMin, _awakeMoveDurationMax);
 
     private void Start()
     {
@@ -75,7 +81,12 @@ public class ChickenHeart : MonoBehaviour
         var newTarget =  new Vector3(_startPosition.x + Random.Range(-randomRadius, randomRadius),
                 _startPosition.y + Random.Range(-randomRadius, randomRadius), _startPosition.z);
 
-        _currentForce = (newTarget - transform.position).normalized * (_isFarFromStartPosition ? _moveFastForce : _moveForce);
+        _currentForce = (newTarget - transform.position).normalized * (_state == ChickenHeartState.FreeFollowing
+            ?
+            _moveFreeFollowForce
+            : _isFarFromStartPosition
+                ? _moveFastForce
+                : _moveForce);
     }
 
     private void FixedUpdate()
@@ -94,5 +105,15 @@ public class ChickenHeart : MonoBehaviour
         }
 
         _startPosition = chickenHeartsTrigger.GetNextChickenHeartPosition();
+    }
+
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        if (_state != ChickenHeartState.FreeFollowing || !other.gameObject.CompareTag("Body"))
+        {
+            return;
+        }
+
+        other.rigidbody.AddForce(new Vector2(0, _freeFollowLiftingForce * Time.deltaTime));
     }
 }
