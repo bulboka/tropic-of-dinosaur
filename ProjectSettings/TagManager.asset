@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Body
   - StuckObject
+  - ChickenWheel
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - GroundSlipery
   - TrapDoor
   - ChickenHearts
-  - 
+  - ChickenWheel
   - 
   - 
   - 

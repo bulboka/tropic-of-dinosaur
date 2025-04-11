@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -22,6 +24,7 @@ public class ChickenHeart : MonoBehaviour
     [SerializeField] private float _randomRadius;
     [SerializeField] private float _randomRadiusFreeFollow;
     [SerializeField] private float _freeFollowLiftingForce;
+    [SerializeField] private float _wheelTorque;
 
     private ChickenHeartState _state;
 
@@ -115,5 +118,15 @@ public class ChickenHeart : MonoBehaviour
         }
 
         other.rigidbody.AddForce(new Vector2(0, _freeFollowLiftingForce * Time.deltaTime));
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (!other.gameObject.CompareTag("ChickenWheel"))
+        {
+            return;
+        }
+
+        other.attachedRigidbody.AddTorque(_wheelTorque * Time.deltaTime * (other.transform.localScale.x > 0 ? 1f : -1f));
     }
 }
