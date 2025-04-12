@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 8033486328286246279}
   - component: {fileID: 8831427375650494631}
   - component: {fileID: 5427518575923033795}
-  m_Layer: 8
+  m_Layer: 18
   m_Name: SkullRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
