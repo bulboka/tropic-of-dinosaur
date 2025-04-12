@@ -11,6 +11,7 @@ public class GameSession : MonoBehaviour
     [SerializeField] private bool _useCheatStartLocator;
     [SerializeField] private Transform _cheatStartLocator;
     [SerializeField] private ChickenHeartsManager _chickenHeartsManager;
+    [SerializeField] private SkullManager _skullManager;
 
     private static GameSession _instance;
     private bool _isTimeCheatActive;
@@ -28,6 +29,8 @@ public class GameSession : MonoBehaviour
     public static List<StickyObject> StuckObjects => _instance._stuckObjects;
 
     public static ChickenHeartsManager ChickenHeartsManager => _instance._chickenHeartsManager;
+
+    public static SkullManager SkullManager => _instance._skullManager;
 
     private void Start()
     {
@@ -80,7 +83,7 @@ public class GameSession : MonoBehaviour
         newBody.transform.position = _instance._hand.transform.position - newBody.Hand.transform.localPosition;
         newBody.Initialize();
 
-        _instance._camera.SetTarget(newBody.Torso);
+        _instance._camera.SetTarget(newBody.Torso.transform);
 
         newBody.Hand.SetView(_instance._hand.View);
         _instance._hand.Dispose();
@@ -121,13 +124,22 @@ public class GameSession : MonoBehaviour
             return;
         }
 
-        newBone.transform.rotation = oldBone.rotation;
+        newBone.rotation = oldBone.rotation;
+
+        var newBoneBody = newBone.GetComponent<Rigidbody2D>();
+        var oldBoneBody = oldBone.GetComponent<Rigidbody2D>();
+
+        if (oldBoneBody != null && newBoneBody != null)
+        {
+            newBoneBody.rotation = oldBoneBody.rotation;
+        }
 
         var joint = newBone.GetComponent<HingeJoint2D>();
 
         if (joint == null)
         {
             newBone.position = oldBone.position;
+            newBoneBody.position = oldBoneBody.position;
         }
         else
         {
@@ -135,6 +147,7 @@ public class GameSession : MonoBehaviour
                 joint.connectedBody.transform.TransformPoint(joint.connectedAnchor);
             var anchorWorld = newBone.TransformPoint(joint.anchor);
             newBone.position = connectedAnchorWorld/* + (newBonesContainer.position - anchorWorld)*/;
+            newBoneBody.position = connectedAnchorWorld;
         }
 
         var hingedBones = new List<Transform>();

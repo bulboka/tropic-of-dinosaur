@@ -1473,7 +1473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hand: {fileID: 6325328591530978372}
-  _torso: {fileID: 3041885767802677487}
+  _torso: {fileID: 7523539704694033928}
   _skeletonRoot: {fileID: 3084900637171021736}
   _rootBone: {fileID: 3536663695648097591}
 --- !u!1 &7098693729544806543

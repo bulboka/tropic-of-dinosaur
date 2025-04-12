@@ -5,13 +5,13 @@ using UnityEngine;
 public class Body : MonoBehaviour
 {
     [SerializeField] private Hand _hand;
-    [SerializeField] private Transform _torso;
+    [SerializeField] private Rigidbody2D _torso;
     [SerializeField] private Transform _skeletonRoot;
     [SerializeField] private Transform _rootBone;
 
     public Hand Hand => _hand;
 
-    public Transform Torso => _torso;
+    public Rigidbody2D Torso => _torso;
 
     public Transform SkeletonRoot => _skeletonRoot;
 

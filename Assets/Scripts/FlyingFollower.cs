@@ -50,7 +50,7 @@ public class FlyingFollower : MonoBehaviour
             return;
         }
 
-        var distToPlayerSqr = (GameSession.Body.Torso.position - transform.position).sqrMagnitude;
+        var distToPlayerSqr = (GameSession.Body.Torso.transform.position - transform.position).sqrMagnitude;
 
         if (_isAwake && distToPlayerSqr > _sleepDistanceSqr)
         {
@@ -73,7 +73,7 @@ public class FlyingFollower : MonoBehaviour
         var newTarget = _isAwake
             ? _isFollowing
                 ? GameSession.Body.Torso.position
-                : transform.position + (transform.position - GameSession.Body.Torso.position)
+                : transform.position + (transform.position - GameSession.Body.Torso.transform.position)
             : new Vector3(_startPosition.x + Random.Range(-_sleepRandomRadius, _sleepRandomRadius),
                 _startPosition.y + Random.Range(-_sleepRandomRadius, _sleepRandomRadius), _startPosition.z);
 

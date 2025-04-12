@@ -202,12 +202,12 @@ MonoBehaviour:
   _awakeMoveDurationMax: 0.5
   _freeFollowMoveDurationMin: 0.8
   _freeFollowMoveDurationMax: 0.8
-  _moveForce: 67
-  _moveFastForce: 136
-  _moveFreeFollowForce: 230
+  _moveForce: 48
+  _moveFastForce: 100
+  _moveFreeFollowForce: 180
   _randomRadius: 1.5
   _randomRadiusFreeFollow: 4
-  _freeFollowLiftingForce: 17000
+  _freeFollowLiftingForce: 21000
   _wheelTorque: 24
 --- !u!50 &1632457983656951592
 Rigidbody2D:
@@ -221,7 +221,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 3.2
+  m_Mass: 2.5
   m_LinearDrag: 3
   m_AngularDrag: 0.9
   m_GravityScale: 0

@@ -7,6 +7,9 @@ public class ChickenHeartsManager : MonoBehaviour
     [SerializeField] private float _maxFreeFollowDistance;
 
     private List<ChickenHeart> _hearts;
+
+    public List<ChickenHeart> Hearts => _hearts;
+
     public void Initialize()
     {
         _hearts = FindObjectsByType<ChickenHeart>(FindObjectsInactive.Include, FindObjectsSortMode.None).ToList();
@@ -14,7 +17,7 @@ public class ChickenHeartsManager : MonoBehaviour
 
     public void SummonHeartsTo(ChickenHeartsTrigger chickenHeartsTrigger)
     {
-        foreach (var heart in _hearts.Where(heart => heart.State == ChickenHeartState.Awake))
+        foreach (var heart in Hearts.Where(heart => heart.State == ChickenHeartState.Awake))
         {
             heart.GoToTrigger(chickenHeartsTrigger);
         }
@@ -24,12 +27,12 @@ public class ChickenHeartsManager : MonoBehaviour
     {
         var maxFreeFollowDistanceSqr = Mathf.Pow(_maxFreeFollowDistance, 2);
 
-        for (var i = _hearts.Count - 1; i >= 0; i--)
+        for (var i = Hearts.Count - 1; i >= 0; i--)
         {
-            var heart = _hearts[i];
+            var heart = Hearts[i];
 
             if (heart.State == ChickenHeartState.Awake &&
-                (heart.transform.position - GameSession.Body.Torso.position).sqrMagnitude <= maxFreeFollowDistanceSqr)
+                (heart.transform.position - GameSession.Body.Torso.transform.position).sqrMagnitude <= maxFreeFollowDistanceSqr)
             {
                 heart.State = ChickenHeartState.FreeFollowing;
                 heart.gameObject.layer = LayerMask.NameToLayer("Ground");
@@ -37,7 +40,7 @@ public class ChickenHeartsManager : MonoBehaviour
             else
             {
                 Destroy(heart.gameObject);
-                _hearts.RemoveAt(i);
+                Hearts.RemoveAt(i);
             }
         }
     }

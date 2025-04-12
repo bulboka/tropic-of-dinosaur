@@ -55,7 +55,7 @@ public class RollingFollower : MonoBehaviour
 
     private void Update()
     {
-        var toPlayerVector = GameSession.Body.Torso.position - transform.position;
+        var toPlayerVector = GameSession.Body.Torso.transform.position - transform.position;
         var distToPlayerSqr = toPlayerVector.sqrMagnitude;
 
         if (!IsAwake && distToPlayerSqr < _awakeDistanceSqr)
