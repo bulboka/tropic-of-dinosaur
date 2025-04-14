@@ -43,6 +43,12 @@ public class ChickenHeart : MonoBehaviour
         set => _state = value;
     }
 
+    public float FreeFollowLiftingForce
+    {
+        get => _freeFollowLiftingForce;
+        set => _freeFollowLiftingForce = value;
+    }
+
     private float GetNewIdleDuration() => _state == ChickenHeartState.FreeFollowing
         ? Random.Range(_freeFollowIdleDurationMin, _freeFollowIdleDurationMax)
         : _isFarFromStartPosition
@@ -117,7 +123,7 @@ public class ChickenHeart : MonoBehaviour
             return;
         }
 
-        other.rigidbody.AddForce(new Vector2(0, _freeFollowLiftingForce * Time.deltaTime));
+        other.rigidbody.AddForce(new Vector2(0, FreeFollowLiftingForce * Time.deltaTime));
     }
 
     private void OnTriggerStay2D(Collider2D other)

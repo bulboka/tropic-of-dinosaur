@@ -28,6 +28,30 @@ public class Hand : MonoBehaviour
 
     public GameObject View => _view;
 
+    public float MouseSensitivity
+    {
+        get => _mouseSensitivity;
+        set => _mouseSensitivity = value;
+    }
+
+    public float MaxForce
+    {
+        get => _maxForce;
+        set => _maxForce = value;
+    }
+
+    public float MinForce
+    {
+        get => _minForce;
+        set => _minForce = value;
+    }
+
+    public float AirbornForceMult
+    {
+        get => _airbornForceMult;
+        set => _airbornForceMult = value;
+    }
+
     public void Initialize(Body body)
     {
         _body = body;
@@ -58,8 +82,8 @@ public class Hand : MonoBehaviour
             return;
         }
 
-        var inputX = Input.GetAxisRaw("Mouse X") * _mouseSensitivity;
-        var inputY = Input.GetAxisRaw("Mouse Y") * _mouseSensitivity;
+        var inputX = Input.GetAxisRaw("Mouse X") * MouseSensitivity;
+        var inputY = Input.GetAxisRaw("Mouse Y") * MouseSensitivity;
 
         _desiredPosition = new Vector3(_desiredPosition.x + inputX, _desiredPosition.y + inputY, 0);
 
@@ -93,8 +117,8 @@ public class Hand : MonoBehaviour
         var positionDeltaNormalized = positionDelta.normalized;
 
         var force = positionDeltaNormalized *
-                    ((_minForce + (_maxForce - _minForce) * Mathf.Clamp01(positionDeltaMag / _maxPositioDelta)) *
-                     (_body.IsTouchingGround ? 1f : _airbornForceMult));
+                    ((MinForce + (MaxForce - MinForce) * Mathf.Clamp01(positionDeltaMag / _maxPositioDelta)) *
+                     (_body.IsTouchingGround ? 1f : AirbornForceMult));
 
         _rigidbody.AddForce(force);
     }
@@ -116,5 +140,12 @@ public class Hand : MonoBehaviour
     public void Dispose()
     {
         _view = null;
+    }
+
+    public void CopyParamsFrom(Hand hand)
+    {
+        _minForce = hand.MinForce;
+        _maxForce = hand.MaxForce;
+        _airbornForceMult = hand.AirbornForceMult;
     }
 }

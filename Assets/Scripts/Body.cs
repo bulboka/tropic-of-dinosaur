@@ -37,7 +37,7 @@ public class Body : MonoBehaviour
         _contactPoints = new ContactPoint2D[20];
         _overlapColliders = new Collider2D[20];
         _contactFilter = new ContactFilter2D();
-        _contactFilter.SetLayerMask(LayerMask.GetMask("Ground", "TrapDoor"));
+        _contactFilter.SetLayerMask(LayerMask.GetMask("Ground", "TrapDoor", "ChickenHeartsGround"));
         _contactFilter.useTriggers = true;
         _limbs = GetComponentsInChildren<Rigidbody2D>().ToList();
         _isInitialized = true;

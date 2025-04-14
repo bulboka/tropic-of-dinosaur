@@ -85,6 +85,7 @@ public class GameSession : MonoBehaviour
 
         _instance._camera.SetTarget(newBody.Torso.transform);
 
+        newBody.Hand.CopyParamsFrom(_instance._hand);
         newBody.Hand.SetView(_instance._hand.View);
         _instance._hand.Dispose();
         Destroy(_instance._hand.gameObject);
