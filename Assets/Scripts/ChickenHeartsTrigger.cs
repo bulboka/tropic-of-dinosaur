@@ -23,6 +23,11 @@ public class ChickenHeartsTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (!other.gameObject.CompareTag("Body"))
+        {
+            return;
+        }
+
         GameSession.ChickenHeartsManager.SummonHeartsTo(this);
 
         var hearts = Physics2D.OverlapBoxAll(transform.position, new Vector2(_width, _height), 0,

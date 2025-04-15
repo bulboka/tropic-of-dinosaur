@@ -17,6 +17,11 @@ public class DarknessTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (!other.gameObject.CompareTag("Body"))
+        {
+            return;
+        }
+
         _collider.enabled = false;
         _isHiding = true;
     }

@@ -6,6 +6,11 @@ public class SkullSpawnTimerTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (!other.gameObject.CompareTag("Body"))
+        {
+            return;
+        }
+
         gameObject.SetActive(false);
 
         if (GameSession.SkullManager.NextSkullPrefabIndex > 0)

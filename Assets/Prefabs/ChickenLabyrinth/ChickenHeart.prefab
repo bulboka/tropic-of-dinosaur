@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: 4394799007421629019}
   m_Layer: 15
   m_Name: ChickenHeart
-  m_TagString: Untagged
+  m_TagString: ChickenHeart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

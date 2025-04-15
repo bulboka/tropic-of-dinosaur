@@ -21,6 +21,18 @@ public class CameraController : MonoBehaviour
 
     public Camera Camera => _camera;
 
+    public float Zoom
+    {
+        get => _zoom;
+        set => _zoom = value;
+    }
+
+    public Vector3 Shift
+    {
+        get => _shift;
+        set => _shift = value;
+    }
+
     private void Start()
     {
         _maxX = transform.position.x;
@@ -31,7 +43,7 @@ public class CameraController : MonoBehaviour
         }
 
         _shiftTriggers = new List<CameraShiftTrigger>();
-        _zoom = _camera.transform.localPosition.z;
+        Zoom = _camera.transform.localPosition.z;
     }
 
     private void LateUpdate()
@@ -41,13 +53,13 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        var targetPosition = _target.position + _shift;
+        var targetPosition = _target.position + Shift;
         targetPosition.x = Mathf.Max(targetPosition.x, _maxX - _margin);
 
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, _smoothTime);
         _maxX = Mathf.Max(_maxX, transform.position.x);
 
-        _camera.transform.localPosition = Vector3.SmoothDamp(_camera.transform.localPosition, new Vector3(0, 0, _zoom),
+        _camera.transform.localPosition = Vector3.SmoothDamp(_camera.transform.localPosition, new Vector3(0, 0, Zoom),
             ref _innerVelocity, _zoomSmoothTime);
     }
 
@@ -63,6 +75,11 @@ public class CameraController : MonoBehaviour
             Destroy(_overlayEffect.gameObject);
         }
 
+        if (effectPrefab == null)
+        {
+            return;
+        }
+
         _overlayEffect = Instantiate(effectPrefab, _overlayEffectContainer);
         _overlayEffect.transform.localPosition = Vector3.zero;
         _overlayEffect.transform.localRotation = Quaternion.identity;
@@ -76,7 +93,7 @@ public class CameraController : MonoBehaviour
         if (shiftTrigger != null)
         {
             _shiftTriggers.Add(shiftTrigger);
-            _shift = shiftTrigger.Shift;
+            Shift = shiftTrigger.Shift;
 
             return;
         }
@@ -85,7 +102,7 @@ public class CameraController : MonoBehaviour
 
         if (zoomTrigger != null)
         {
-            _zoom = zoomTrigger.Zoom;
+            Zoom = zoomTrigger.Zoom;
             zoomTrigger.gameObject.SetActive(false);
 
             return;
@@ -123,7 +140,7 @@ public class CameraController : MonoBehaviour
 
         if (_shiftTriggers.Remove(shiftTrigger))
         {
-            _shift = _shiftTriggers.Count == 0 ? Vector3.zero : _shiftTriggers.Last().Shift;
+            Shift = _shiftTriggers.Count == 0 ? Vector3.zero : _shiftTriggers.Last().Shift;
         }
     }
 }

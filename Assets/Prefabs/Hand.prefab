@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 5170527715562291826}
-  _mouseSensitivity: 0.2
+  _mouseSensitivity: 0.4
   _maxForce: 2700
   _minForce: 0
   _maxPositioDelta: 1
