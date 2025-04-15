@@ -80,7 +80,11 @@ public class GameSession : MonoBehaviour
 
         var newBody = Instantiate(bodyPrefab);
 
-        newBody.transform.position = _instance._hand.transform.position - newBody.Hand.transform.localPosition;
+        _instance._body.StartTransition(newBody);
+
+        // ---------------- The second, currently working variant -------------------
+
+        /*newBody.transform.position = _instance._hand.transform.position - newBody.Hand.transform.localPosition;
         newBody.Initialize();
 
         _instance._camera.SetTarget(newBody.Torso.transform);
@@ -91,7 +95,9 @@ public class GameSession : MonoBehaviour
         Destroy(_instance._hand.gameObject);
         _instance._hand = newBody.Hand;
 
-        ProcessBone(newBody.RootBone, newBody.SkeletonRoot, _instance._body.SkeletonRoot);
+        ProcessBone(newBody.RootBone, newBody.SkeletonRoot, _instance._body.SkeletonRoot);*/
+
+        // ---------------- The first variant, totally obsolete -------------------
 
         /*for (var i = 0; i < _instance._body.SkeletonRoot.childCount; i++)
         {
@@ -110,10 +116,10 @@ public class GameSession : MonoBehaviour
             }
         }*/
 
-        Destroy(_instance._body.gameObject);
+        /*Destroy(_instance._body.gameObject);
         _instance._body = newBody;
 
-        _instance._body.Hand.IsInputEnabled = true;
+        _instance._body.Hand.IsInputEnabled = true;*/
     }
 
     private static void ProcessBone(Transform newBone, Transform newBonesContainer, Transform oldBonesContainer)

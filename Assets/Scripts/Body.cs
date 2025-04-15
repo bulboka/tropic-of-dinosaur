@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 public class Body : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class Body : MonoBehaviour
     [SerializeField] private Rigidbody2D _torso;
     [SerializeField] private Transform _skeletonRoot;
     [SerializeField] private Transform _rootBone;
+    [SerializeField] private float _transitionDuration;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
 
     public Hand Hand => _hand;
 
@@ -19,12 +22,17 @@ public class Body : MonoBehaviour
 
     public Transform RootBone => _rootBone;
 
-    private List<Rigidbody2D> _limbs;
+    public SpriteRenderer SpriteRenderer => _spriteRenderer;
+
+    private List<BodyPart> _limbs;
     private bool _isInitialized;
     private ContactPoint2D[] _contactPoints;
     private ContactFilter2D _contactFilter;
     private Collider2D[] _overlapColliders;
     private bool _isTouchingGround;
+    private Body _newBody;
+    private bool _isTransitioning;
+    private float _transitionFinishTime;
 
     public void Initialize()
     {
@@ -39,7 +47,7 @@ public class Body : MonoBehaviour
         _contactFilter = new ContactFilter2D();
         _contactFilter.SetLayerMask(LayerMask.GetMask("Ground", "TrapDoor", "ChickenHeartsGround", "Tangerine"));
         _contactFilter.useTriggers = true;
-        _limbs = GetComponentsInChildren<Rigidbody2D>().ToList();
+        _limbs = GetComponentsInChildren<BodyPart>().ToList();
         _isInitialized = true;
     }
 
@@ -51,7 +59,54 @@ public class Body : MonoBehaviour
         }
 
         _isTouchingGround = _limbs.Any(limb =>
-            limb.GetContacts(_contactFilter, _contactPoints) > 0 ||
-            limb.OverlapCollider(_contactFilter, _overlapColliders) > 0);
+            limb.Rigidbody.GetContacts(_contactFilter, _contactPoints) > 0 ||
+            limb.Rigidbody.OverlapCollider(_contactFilter, _overlapColliders) > 0);
+
+        if (_isTransitioning && Time.time >= _transitionFinishTime)
+        {
+            _isTransitioning = false;
+            _spriteRenderer.sprite = _newBody.SpriteRenderer.sprite;
+            Destroy(_newBody.gameObject);
+        }
+    }
+
+    public void StartTransition(Body newBody)
+    {
+        _newBody = newBody;
+        _newBody.gameObject.SetActive(false);
+        _isTransitioning = true;
+        _transitionFinishTime = Time.time + _transitionDuration;
+
+        foreach (var limb in _limbs)
+        {
+            var newBodyPart = _newBody.TryGetBodyPart(limb.name);
+
+            if (newBodyPart == null)
+            {
+                continue;
+            }
+
+            limb.StartTransitioning(newBodyPart, _transitionDuration);
+        }
+    }
+
+    private BodyPart TryGetBodyPart(string bodyPartName)
+    {
+        if (_limbs == null)
+        {
+            _limbs = GetComponentsInChildren<BodyPart>().ToList();
+        }
+
+        return _limbs.FirstOrDefault(limb => limb.gameObject.name == bodyPartName);
+    }
+
+    private void BindSkinnedSprite()
+    {
+        var skinnedSprite = GetComponentInChildren<SpriteSkin>();
+
+        if (skinnedSprite == null)
+        {
+            return;
+        }
     }
 }
