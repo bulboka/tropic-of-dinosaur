@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -26,8 +25,13 @@ public class ChickenHeart : MonoBehaviour
     [SerializeField] private float _freeFollowLiftingForce;
     [SerializeField] private float _wheelTorque;
 
-    private ChickenHeartState _state;
+    [Header("Special")]
+    [SerializeField] private float _specialMoveForce;
+    [SerializeField] private float _specialMoveFastForce;
+    [SerializeField] private float _specialAwakeIdleDurationFastMin;
+    [SerializeField] private float _specialAwakeIdleDurationFastMax;
 
+    private ChickenHeartState _state;
     private Vector3 _startPosition;
     private Vector3 _currentForce;
     private bool _isMoving;
@@ -37,10 +41,16 @@ public class ChickenHeart : MonoBehaviour
     private bool _isFarFromStartPosition;
     private float _randomRadiusSqr;
 
+    public Action<ChickenHeart> OnStateChange;
+
     public ChickenHeartState State
     {
         get => _state;
-        set => _state = value;
+        set
+        {
+            _state = value;
+            OnStateChange?.Invoke(this);
+        }
     }
 
     public float FreeFollowLiftingForce
@@ -134,5 +144,13 @@ public class ChickenHeart : MonoBehaviour
         }
 
         other.attachedRigidbody.AddTorque(_wheelTorque * Time.deltaTime * (other.transform.localScale.x > 0 ? 1f : -1f));
+    }
+
+    public void BecomeSpecial()
+    {
+        _moveForce = _specialMoveForce;
+        _moveFastForce = _specialMoveFastForce;
+        _awakeIdleDurationFastMin = _specialAwakeIdleDurationFastMin;
+        _awakeIdleDurationFastMax = _specialAwakeIdleDurationFastMax;
     }
 }

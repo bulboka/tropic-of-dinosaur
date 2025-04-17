@@ -16,7 +16,7 @@ public class CameraController : MonoBehaviour
     private float _maxX;
     private GameObject _overlayEffect;
     private Vector3 _shift;
-    private List<CameraShiftTrigger> _shiftTriggers;
+    private List<CameraShiftArea> _shiftAreas;
     private float _zoom;
 
     public Camera Camera => _camera;
@@ -42,7 +42,7 @@ public class CameraController : MonoBehaviour
             _overlayEffect = _overlayEffectContainer.GetChild(0).gameObject;
         }
 
-        _shiftTriggers = new List<CameraShiftTrigger>();
+        _shiftAreas = new List<CameraShiftArea>();
         Zoom = _camera.transform.localPosition.z;
     }
 
@@ -53,13 +53,13 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        var targetPosition = _target.position + Shift;
+        var targetPosition = _target.position + _shift;
         targetPosition.x = Mathf.Max(targetPosition.x, _maxX - _margin);
 
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _velocity, _smoothTime);
         _maxX = Mathf.Max(_maxX, transform.position.x);
 
-        _camera.transform.localPosition = Vector3.SmoothDamp(_camera.transform.localPosition, new Vector3(0, 0, Zoom),
+        _camera.transform.localPosition = Vector3.SmoothDamp(_camera.transform.localPosition, new Vector3(0, 0, _zoom),
             ref _innerVelocity, _zoomSmoothTime);
     }
 
@@ -88,12 +88,22 @@ public class CameraController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        var shiftArea = other.gameObject.GetComponent<CameraShiftArea>();
+
+        if (shiftArea != null)
+        {
+            _shiftAreas.Add(shiftArea);
+            _shift = shiftArea.Shift;
+
+            return;
+        }
+
         var shiftTrigger = other.gameObject.GetComponent<CameraShiftTrigger>();
 
         if (shiftTrigger != null)
         {
-            _shiftTriggers.Add(shiftTrigger);
-            Shift = shiftTrigger.Shift;
+            _shift = shiftTrigger.Shift;
+            shiftTrigger.gameObject.SetActive(false);
 
             return;
         }
@@ -102,8 +112,18 @@ public class CameraController : MonoBehaviour
 
         if (zoomTrigger != null)
         {
-            Zoom = zoomTrigger.Zoom;
+            _zoom = zoomTrigger.Zoom;
             zoomTrigger.gameObject.SetActive(false);
+
+            return;
+        }
+
+        var zoomTimeTrigger = other.gameObject.GetComponent<CameraZoomTimeTrigger>();
+
+        if (zoomTimeTrigger != null)
+        {
+            _zoomSmoothTime = zoomTimeTrigger.ZoomTime;
+            zoomTimeTrigger.gameObject.SetActive(false);
 
             return;
         }
@@ -131,16 +151,16 @@ public class CameraController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        var shiftTrigger = other.gameObject.GetComponent<CameraShiftTrigger>();
+        var shiftTrigger = other.gameObject.GetComponent<CameraShiftArea>();
 
         if (shiftTrigger == null)
         {
             return;
         }
 
-        if (_shiftTriggers.Remove(shiftTrigger))
+        if (_shiftAreas.Remove(shiftTrigger))
         {
-            Shift = _shiftTriggers.Count == 0 ? Vector3.zero : _shiftTriggers.Last().Shift;
+            _shift = _shiftAreas.Count == 0 ? Vector3.zero : _shiftAreas.Last().Shift;
         }
     }
 }

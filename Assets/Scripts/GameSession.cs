@@ -71,12 +71,12 @@ public class GameSession : MonoBehaviour
 
     public static void SwitchBody(Body bodyPrefab)
     {
-        foreach (var stuckObject in StuckObjects)
+        /*foreach (var stuckObject in StuckObjects)
         {
             stuckObject.Unstick();
         }
 
-        StuckObjects.Clear();
+        StuckObjects.Clear();*/
 
         var newBody = Instantiate(bodyPrefab);
 

@@ -203,12 +203,16 @@ MonoBehaviour:
   _freeFollowMoveDurationMin: 0.8
   _freeFollowMoveDurationMax: 0.8
   _moveForce: 48
-  _moveFastForce: 100
+  _moveFastForce: 60
   _moveFreeFollowForce: 180
   _randomRadius: 1.5
   _randomRadiusFreeFollow: 4
   _freeFollowLiftingForce: 21000
   _wheelTorque: 24
+  _specialMoveForce: 90
+  _specialMoveFastForce: 180
+  _specialAwakeIdleDurationFastMin: 0.2
+  _specialAwakeIdleDurationFastMax: 0.2
 --- !u!50 &1632457983656951592
 Rigidbody2D:
   serializedVersion: 4

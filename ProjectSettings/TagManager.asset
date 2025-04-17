@@ -9,6 +9,9 @@ TagManager:
   - ChickenWheel
   - ChickenHeart
   - TangerineDeath
+  - StubToStarTrigger
+  - Stub
+  - Constellation
   layers:
   - Default
   - TransparentFX
@@ -31,8 +34,8 @@ TagManager:
   - Skulls
   - ChickenHeartsGround
   - Tangerine
-  - 
-  - 
+  - Stub
+  - ChickenWall
   - 
   - 
   - 

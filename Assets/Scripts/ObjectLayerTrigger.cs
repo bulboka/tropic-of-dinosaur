@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class ObjectLayerTrigger : MonoBehaviour
 {
-    [SerializeField] private LayerMask _layer;
+    [SerializeField] private string _layer;
     [SerializeField] private List<string> _includeTags;
+    [SerializeField] private bool _oneTimeUse;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -14,7 +15,11 @@ public class ObjectLayerTrigger : MonoBehaviour
             return;
         }
 
-        gameObject.SetActive(false);
-        other.gameObject.layer = _layer.value;
+        if (_oneTimeUse)
+        {
+            gameObject.SetActive(false);
+        }
+
+        other.gameObject.layer = LayerMask.NameToLayer(_layer);
     }
 }

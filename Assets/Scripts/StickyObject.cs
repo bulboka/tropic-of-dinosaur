@@ -4,6 +4,7 @@ using UnityEngine;
 public class StickyObject : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D _rigidbody;
+    [SerializeField] private Collider2D _collider;
     [SerializeField] private float _unstickShift;
     [SerializeField] private float _unstickForce;
 
@@ -28,6 +29,8 @@ public class StickyObject : MonoBehaviour
             Destroy(joint);
         }
 
+        _rigidbody.bodyType = RigidbodyType2D.Dynamic;
+
         _stickJoint = gameObject.AddComponent<FixedJoint2D>();
         _stickJoint.connectedBody = other.rigidbody;
 
@@ -36,6 +39,7 @@ public class StickyObject : MonoBehaviour
         _collisionNormalLocal = transform.InverseTransformDirection(contact.normal).normalized;
 
         GameSession.StuckObjects.Add(this);
+        _collider.enabled = false;
 
         gameObject.layer = LayerMask.NameToLayer("StuckObject");
         //gameObject.tag = "StuckObject";

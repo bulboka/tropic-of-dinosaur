@@ -6,6 +6,11 @@ public class SwitchBodyTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (!other.gameObject.CompareTag("Body"))
+        {
+            return;
+        }
+
         GameSession.SwitchBody(_bodyPrefab);
         gameObject.SetActive(false);
     }
