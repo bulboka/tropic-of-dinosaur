@@ -23,6 +23,7 @@ public class SkullManager : MonoBehaviour
     private int _aliveHeartsCount;
     private bool _isSucking;
     private float _suckerForce;
+    private bool _hasFinishedEating;
 
     public int NextSkullPrefabIndex => _nextSkullPrefabIndex;
 
@@ -81,6 +82,14 @@ public class SkullManager : MonoBehaviour
 
     private void FinishEating(Skull lastSkull)
     {
+        if (_hasFinishedEating)
+        {
+            return;
+        }
+
+        _hasFinishedEating = true;
+
+        lastSkull.OnPreyEaten -= OnPreyEaten;
         lastSkull.Follow();
         _skulls.Remove(lastSkull);
 
@@ -88,6 +97,7 @@ public class SkullManager : MonoBehaviour
         {
             if (skull != null)
             {
+                skull.OnPreyEaten -= OnPreyEaten;
                 skull.FlyAway();
             }
         }

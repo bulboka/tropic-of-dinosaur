@@ -117,6 +117,7 @@ public class Skull : MonoBehaviour
         if ((transform.position - GameSession.Body.Torso.transform.position).sqrMagnitude >=
             _flyAwayDistance * _flyAwayDistance)
         {
+            OnPreyEaten = null;
             Destroy(gameObject);
         }
     }
