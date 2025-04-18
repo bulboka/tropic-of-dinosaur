@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class DrainTrigger : MonoBehaviour
@@ -6,6 +5,7 @@ public class DrainTrigger : MonoBehaviour
     [SerializeField] private GameObject _antiDrainEffector;
     [SerializeField] private float _removeAntiDrainDelay;
     [SerializeField] private Collider2D _collider;
+    [SerializeField] private BodyFire _bodyFirePrefab;
 
     private float _removeAntiDrainTime = -1;
 
@@ -26,6 +26,8 @@ public class DrainTrigger : MonoBehaviour
         }
 
         _removeAntiDrainTime = Time.time + _removeAntiDrainDelay;
+
+        Instantiate(_bodyFirePrefab);
     }
 
     private void Update()

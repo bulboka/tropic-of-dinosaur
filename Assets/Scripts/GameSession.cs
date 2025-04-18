@@ -1,5 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+
+public enum Age { Baby, Child, Adult, Fat, Old }
 
 public class GameSession : MonoBehaviour
 {
@@ -15,8 +18,9 @@ public class GameSession : MonoBehaviour
 
     private static GameSession _instance;
     private bool _isTimeCheatActive;
-    private readonly List<GameObject> _usedHandViewPrefabs = new();
+    private readonly List<HandView> _usedHandViewPrefabs = new();
     private readonly List<StickyObject> _stuckObjects = new();
+    private Age _age;
 
     public static Hand Hand => _instance._hand;
 
@@ -24,13 +28,15 @@ public class GameSession : MonoBehaviour
 
     public static CameraController Camera => _instance._camera;
 
-    public static List<GameObject> UsedHandViewPrefabs => _instance._usedHandViewPrefabs;
+    public static List<HandView> UsedHandViewPrefabs => _instance._usedHandViewPrefabs;
 
     public static List<StickyObject> StuckObjects => _instance._stuckObjects;
 
     public static ChickenHeartsManager ChickenHeartsManager => _instance._chickenHeartsManager;
 
     public static SkullManager SkullManager => _instance._skullManager;
+
+    public static Age Age => _instance._age;
 
     private void Start()
     {
@@ -43,6 +49,21 @@ public class GameSession : MonoBehaviour
 
         _body.Initialize();
         _hand.IsInputEnabled = false;
+
+        if (_useCheatStartLocator)
+        {
+            var nearestSwitchBodyTrigger =
+                FindObjectsByType<SwitchBodyTrigger>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+                    .Where(trigger =>
+                        _cheatStartLocator.position.x - trigger.transform.position.x > 0).OrderBy(trigger =>
+                        (trigger.transform.position - _cheatStartLocator.position).sqrMagnitude).FirstOrDefault();
+
+            if (nearestSwitchBodyTrigger != null)
+            {
+                SwitchBody(nearestSwitchBodyTrigger.BodyPrefab, true);
+            }
+        }
+
         _startUI.Show();
         _startUI.OnComplete += OnStartUIComplete;
         _chickenHeartsManager.Initialize();
@@ -69,7 +90,7 @@ public class GameSession : MonoBehaviour
         _music.Play();
     }
 
-    public static void SwitchBody(Body bodyPrefab)
+    public static void SwitchBody(Body bodyPrefab, bool fast = false)
     {
         /*foreach (var stuckObject in StuckObjects)
         {
@@ -80,7 +101,8 @@ public class GameSession : MonoBehaviour
 
         var newBody = Instantiate(bodyPrefab);
 
-        _instance._body.StartTransition(newBody);
+        _instance._age = newBody.Age;
+        _instance._body.StartTransition(newBody, fast);
 
         // ---------------- The second, currently working variant -------------------
 

@@ -11,6 +11,8 @@ public class Body : MonoBehaviour
     [SerializeField] private Transform _rootBone;
     [SerializeField] private float _transitionDuration;
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private Transform _fireLocator;
+    [SerializeField] private Age _age;
 
     public Hand Hand => _hand;
 
@@ -23,6 +25,10 @@ public class Body : MonoBehaviour
     public Transform RootBone => _rootBone;
 
     public SpriteRenderer SpriteRenderer => _spriteRenderer;
+
+    public Transform FireLocator => _fireLocator;
+
+    public Age Age => _age;
 
     private List<BodyPart> _limbs;
     private bool _isInitialized;
@@ -70,12 +76,16 @@ public class Body : MonoBehaviour
         }
     }
 
-    public void StartTransition(Body newBody)
+    public void StartTransition(Body newBody, bool fast = false)
     {
         _newBody = newBody;
         _newBody.gameObject.SetActive(false);
         _isTransitioning = true;
-        _transitionFinishTime = Time.time + _transitionDuration;
+
+        var transitionDuration = fast ? 2f : _transitionDuration;
+
+        _transitionFinishTime = Time.time + transitionDuration;
+
 
         foreach (var limb in _limbs)
         {
@@ -86,7 +96,7 @@ public class Body : MonoBehaviour
                 continue;
             }
 
-            limb.StartTransitioning(newBodyPart, _transitionDuration);
+            limb.StartTransitioning(newBodyPart, transitionDuration);
         }
     }
 

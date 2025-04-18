@@ -17,7 +17,7 @@ public class Hand : MonoBehaviour
     private Vector3 _desiredPosition;
     private Vector3 _currentInput;
     private bool _isInputEnabled;
-    private GameObject _view;
+    private HandView _view;
     private Body _body;
 
     public bool IsInputEnabled
@@ -26,7 +26,7 @@ public class Hand : MonoBehaviour
         set => _isInputEnabled = value;
     }
 
-    public GameObject View => _view;
+    public HandView View => _view;
 
     public float MouseSensitivity
     {
@@ -123,7 +123,7 @@ public class Hand : MonoBehaviour
         _rigidbody.AddForce(force);
     }
 
-    public void SetView(GameObject view)
+    public void SetView(HandView view)
     {
         if (_view != null)
         {

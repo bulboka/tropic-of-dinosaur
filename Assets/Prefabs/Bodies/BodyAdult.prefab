@@ -1717,6 +1717,8 @@ MonoBehaviour:
   _rootBone: {fileID: 8658661203451282894}
   _transitionDuration: 20
   _spriteRenderer: {fileID: 759692511007140438}
+  _fireLocator: {fileID: 0}
+  _age: 2
 --- !u!1 &7098693729544806543
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,6 +4,8 @@ public class SwitchBodyTrigger : MonoBehaviour
 {
     [SerializeField] private Body _bodyPrefab;
 
+    public Body BodyPrefab => _bodyPrefab;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.gameObject.CompareTag("Body"))

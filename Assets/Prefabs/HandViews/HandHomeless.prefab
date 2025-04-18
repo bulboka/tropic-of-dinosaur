@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6997488305489459036}
+  - component: {fileID: 2057786818757798572}
+  - component: {fileID: -7989645692097458458}
   m_Layer: 0
   m_Name: HandHomeless
   m_TagString: Untagged
@@ -32,6 +34,39 @@ Transform:
   - {fileID: 6282104976271967930}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2057786818757798572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2679558249549493357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aa7acd7261344edb78824f30085c4f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _availableAtAges: 0000000001000000020000000300000004000000
+--- !u!114 &-7989645692097458458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2679558249549493357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab2452bdf3a49dd99cecf10c25ec1f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _randomizePosition: 1
+  _maxShiftX: 0.04
+  _maxShiftY: 0.04
+  _randomizeRotation: 1
+  _minAngle: -1
+  _maxAngle: 1
+  _minPerionDuration: 1
+  _maxPerionDuration: 1
 --- !u!1 &8748288155459310876
 GameObject:
   m_ObjectHideFlags: 0

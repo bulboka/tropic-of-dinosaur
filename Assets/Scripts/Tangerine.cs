@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Tangerine : MonoBehaviour
@@ -10,11 +11,13 @@ public class Tangerine : MonoBehaviour
     [SerializeField] private float _cameraZoomFinish;
     [SerializeField] private Vector3 _cameraShiftStart;
     [SerializeField] private Vector3 _cameraShiftFinish;
+    [SerializeField] private AnimationCurve _factorCurve;
 
     private void Update()
     {
-        var factor = Mathf.Clamp01((transform.position.x - _startLocator.position.x) /
+        var progress = Mathf.Clamp01((transform.position.x - _startLocator.position.x) /
                                    (_finishLocator.position.x - _startLocator.position.x));
+        var factor = _factorCurve.Evaluate(progress);
 
         transform.localScale = Vector3.one * (_scaleMin + (_scaleMax - _scaleMin) * factor);
 

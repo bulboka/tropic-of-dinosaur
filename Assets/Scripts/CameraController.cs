@@ -33,6 +33,12 @@ public class CameraController : MonoBehaviour
         set => _shift = value;
     }
 
+    public float ZoomSmoothTime
+    {
+        get => _zoomSmoothTime;
+        set => _zoomSmoothTime = value;
+    }
+
     private void Start()
     {
         _maxX = transform.position.x;
@@ -46,7 +52,7 @@ public class CameraController : MonoBehaviour
         Zoom = _camera.transform.localPosition.z;
     }
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         if (_target == null)
         {

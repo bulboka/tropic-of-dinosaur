@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class SwitchHandViewTrigger : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> _handViewPrefabs;
+    [SerializeField] private List<HandView> _handViewPrefabs;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         gameObject.SetActive(false);
 
-        var suitableViews = _handViewPrefabs.Where(viewPrefab => !GameSession.UsedHandViewPrefabs.Contains(viewPrefab))
+        var suitableViews = _handViewPrefabs.Where(viewPrefab =>
+                viewPrefab.AvailableAtAges.Contains(GameSession.Age) &&
+                !GameSession.UsedHandViewPrefabs.Contains(viewPrefab))
             .ToList();
 
         if (!suitableViews.Any())

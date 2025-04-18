@@ -7,7 +7,6 @@ public class Stub : MonoBehaviour
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private Collider2D _rigidCollider;
     [SerializeField] private Collider2D _mainStarCollider;
-    [SerializeField] private GameObject _activeView;
     [SerializeField] private float _cameraZoomAddOnActivate;
     [SerializeField] private float _handForceAddOnActivate;
     [SerializeField] private float _cameraZoomMax;
@@ -16,11 +15,16 @@ public class Stub : MonoBehaviour
     [SerializeField] private RotatingObject _rotatingObject;
     [SerializeField] private LineRenderer _lineRendererPrefab;
     [SerializeField] private List<Color> _lineColors;
+    [SerializeField] private GameObject _activeViewPrefab;
+    [SerializeField] private float _lineWidthMin;
+    [SerializeField] private float _lineWidthMax;
+    [SerializeField] private float _minorStarScale;
 
     private bool _isMainStar;
     private MainStarLocator _mainStarLocator;
     private bool _isStarActive;
     private List<LineRenderer> _lineRenderers = new();
+    private GameObject _activeView;
 
     public bool IsStarActive => _isStarActive;
 
@@ -42,44 +46,12 @@ public class Stub : MonoBehaviour
 
     private void TryActivateMainStar(Collider2D other)
     {
-        if (!_isMainStar || !other.gameObject.CompareTag("Body"))
+        if (!_isMainStar || !other.gameObject.CompareTag("Body") || other.gameObject.name != "Torso")
         {
             return;
         }
 
-        _mainStarCollider.enabled = false;
-        _isStarActive = true;
-
-        if (_activeView != null)
-        {
-            _activeView.SetActive(true);
-        }
-
-        foreach (var connectedLocator in _mainStarLocator.ConnectedLocators)
-        {
-            if (connectedLocator.AttachedStub != null && connectedLocator.AttachedStub.IsStarActive)
-            {
-                var lineRenderer = Instantiate(_lineRendererPrefab, transform);
-                lineRenderer.transform.localPosition = Vector3.zero;
-
-                var positions = new[] { transform.position, connectedLocator.AttachedStub.transform.position };
-                lineRenderer.positionCount = 2;
-                lineRenderer.SetPositions(positions);
-                lineRenderer.startColor = lineRenderer.endColor = _lineColors[Random.Range(0, _lineColors.Count)];
-
-                _lineRenderers.Add(lineRenderer);
-            }
-        }
-
-        GameSession.Camera.Zoom -= _cameraZoomAddOnActivate;
-
-        if (GameSession.Camera.Zoom < _cameraZoomMax)
-        {
-            GameSession.Camera.Zoom = _cameraZoomMax;
-        }
-
-        GameSession.Hand.MinForce += _handForceAddOnActivate;
-        GameSession.Hand.MaxForce += _handForceAddOnActivate;
+        ActivateStar(true, true, true);
     }
 
     private void TryTurnToStar(Collider2D other)
@@ -128,9 +100,75 @@ public class Stub : MonoBehaviour
         if (startLocator != null)
         {
             transform.position = startLocator.position;
+            transform.localScale = Vector3.one * _minorStarScale;
             return;
         }
 
         Destroy(gameObject);
+    }
+
+    public void ActivateStar(bool updateCamera, bool updateHand, bool dispatchEvents)
+    {
+        if (_isStarActive)
+        {
+            return;
+        }
+
+        _mainStarCollider.enabled = false;
+        _isStarActive = true;
+
+        _activeView = Instantiate(_activeViewPrefab, transform);
+        _activeView.GetComponentInChildren<SpriteRenderer>().color = _lineColors[Random.Range(0, _lineColors.Count)];
+
+        foreach (var connectedLocator in _mainStarLocator.ConnectedLocators)
+        {
+            if (connectedLocator.AttachedStub != null && connectedLocator.AttachedStub.IsStarActive)
+            {
+                var lineRenderer = Instantiate(_lineRendererPrefab, transform);
+                lineRenderer.transform.localPosition = Vector3.zero;
+
+                var positions = new[] { transform.position, connectedLocator.AttachedStub.transform.position };
+                lineRenderer.positionCount = 2;
+                lineRenderer.SetPositions(positions);
+                //lineRenderer.startColor = lineRenderer.endColor = _lineColors[Random.Range(0, _lineColors.Count)];
+
+                var randomColor = _lineColors[Random.Range(0, _lineColors.Count)];
+                var gradient = lineRenderer.colorGradient;
+
+                for (var i = 0; i < gradient.colorKeys.Length; i++)
+                {
+                    var colorKey = gradient.colorKeys[i];
+                    colorKey.color = randomColor;
+                    gradient.colorKeys[i] = colorKey;
+                }
+
+                lineRenderer.colorGradient = gradient;
+
+                lineRenderer.widthMultiplier = Random.Range(_lineWidthMin, _lineWidthMax);
+
+                _lineRenderers.Add(lineRenderer);
+            }
+        }
+
+        if (updateCamera)
+        {
+            GameSession.Camera.Zoom -= _cameraZoomAddOnActivate;
+
+            if (GameSession.Camera.Zoom < _cameraZoomMax)
+            {
+                GameSession.Camera.Zoom = _cameraZoomMax;
+            }
+        }
+
+        if (updateHand)
+        {
+            GameSession.Hand.MinForce += _handForceAddOnActivate;
+            GameSession.Hand.MaxForce += _handForceAddOnActivate;
+        }
+
+        if (dispatchEvents)
+        {
+            _mainStarLocator.OnActivated?.Invoke();
+        }
     }
 }
