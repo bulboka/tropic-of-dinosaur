@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Android;
 
 public enum Age { Baby, Child, Adult, Fat, Old }
 
@@ -15,6 +16,7 @@ public class GameSession : MonoBehaviour
     [SerializeField] private Transform _cheatStartLocator;
     [SerializeField] private ChickenHeartsManager _chickenHeartsManager;
     [SerializeField] private SkullManager _skullManager;
+    [SerializeField] private PauseUI _pauseUI;
 
     private static GameSession _instance;
     private bool _isTimeCheatActive;
@@ -199,6 +201,18 @@ public class GameSession : MonoBehaviour
         {
             _isTimeCheatActive = !_isTimeCheatActive;
             Time.timeScale = _isTimeCheatActive ? 10f : 1f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (_pauseUI.gameObject.activeSelf)
+            {
+                _pauseUI.Resume();
+            }
+            else
+            {
+                _pauseUI.Show();
+            }
         }
     }
 }
