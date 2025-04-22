@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
@@ -30,6 +31,8 @@ public class Body : MonoBehaviour
 
     public Age Age => _age;
 
+    public bool IsHidden => _isHidden;
+
     private List<BodyPart> _limbs;
     private bool _isInitialized;
     private ContactPoint2D[] _contactPoints;
@@ -39,6 +42,7 @@ public class Body : MonoBehaviour
     private Body _newBody;
     private bool _isTransitioning;
     private float _transitionFinishTime;
+    private bool _isHidden;
 
     public void Initialize()
     {
@@ -59,7 +63,7 @@ public class Body : MonoBehaviour
 
     private void Update()
     {
-        if (!_isInitialized)
+        if (!_isInitialized || _isHidden)
         {
             return;
         }
@@ -118,5 +122,17 @@ public class Body : MonoBehaviour
         {
             return;
         }
+    }
+
+    public void Hide()
+    {
+        _isHidden = true;
+
+        foreach (var bodyPart in _limbs)
+        {
+            bodyPart.DestroyPhysics();
+        }
+
+        _spriteRenderer.DOColor(new Color(1f, 1f, 1f, 0), 1.5f);
     }
 }

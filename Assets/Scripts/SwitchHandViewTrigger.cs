@@ -8,6 +8,11 @@ public class SwitchHandViewTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (!other.gameObject.CompareTag("Body"))
+        {
+            return;
+        }
+
         gameObject.SetActive(false);
 
         var suitableViews = _handViewPrefabs.Where(viewPrefab =>

@@ -24,6 +24,7 @@ public class StartUI : MonoBehaviour
         OnComplete?.Invoke();
     }
 
+#if UNITY_WEBGL
     private void OnApplicationFocus(bool hasFocus)
     {
         if (gameObject.activeSelf && hasFocus)
@@ -31,4 +32,6 @@ public class StartUI : MonoBehaviour
             Complete();
         }
     }
+#endif
+
 }

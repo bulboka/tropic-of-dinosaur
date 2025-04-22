@@ -2,8 +2,15 @@ using UnityEngine;
 
 public class BodyFire : MonoBehaviour
 {
+    public Transform Target;
+
     private void Update()
     {
-        transform.position = GameSession.Body.FireLocator.position;
+        if (Target == null)
+        {
+            return;
+        }
+
+        transform.position = Target.position;
     }
 }

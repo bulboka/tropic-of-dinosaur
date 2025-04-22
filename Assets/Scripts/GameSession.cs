@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Android;
 
 public enum Age { Baby, Child, Adult, Fat, Old }
 
@@ -23,6 +22,7 @@ public class GameSession : MonoBehaviour
     private readonly List<HandView> _usedHandViewPrefabs = new();
     private readonly List<StickyObject> _stuckObjects = new();
     private Age _age;
+    private bool _isGameOver;
 
     public static Hand Hand => _instance._hand;
 
@@ -39,6 +39,12 @@ public class GameSession : MonoBehaviour
     public static SkullManager SkullManager => _instance._skullManager;
 
     public static Age Age => _instance._age;
+
+    public static bool IsGameOver
+    {
+        get => _instance._isGameOver;
+        set => _instance._isGameOver = value;
+    }
 
     private void Start()
     {

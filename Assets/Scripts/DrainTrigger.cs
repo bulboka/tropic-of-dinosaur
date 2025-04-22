@@ -27,7 +27,8 @@ public class DrainTrigger : MonoBehaviour
 
         _removeAntiDrainTime = Time.time + _removeAntiDrainDelay;
 
-        Instantiate(_bodyFirePrefab);
+        var bodyFire = Instantiate(_bodyFirePrefab);
+        bodyFire.Target = GameSession.Body.FireLocator;
     }
 
     private void Update()

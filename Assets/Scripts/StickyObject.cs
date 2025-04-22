@@ -1,4 +1,5 @@
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 
 public class StickyObject : MonoBehaviour
@@ -55,5 +56,16 @@ public class StickyObject : MonoBehaviour
         var collisionNormalWorld = transform.TransformDirection(_collisionNormalLocal);
         _rigidbody.MovePosition(_rigidbody.position + (Vector2)collisionNormalWorld * _unstickShift);
         _rigidbody.AddForce(collisionNormalWorld * _unstickForce);
+    }
+
+    public void GoToLocator(Transform locator)
+    {
+        Destroy(_stickJoint);
+        _stickJoint = null;
+        _isStuck = false;
+        Destroy(_rigidbody);
+        Destroy(_collider);
+
+        transform.DOMove(locator.position, Random.Range(3f, 6f)).SetEase(Ease.Linear);
     }
 }

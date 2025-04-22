@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Constellation : MonoBehaviour
 {
@@ -18,6 +17,7 @@ public class Constellation : MonoBehaviour
     [SerializeField] private float _graceTimerDuration;
     [SerializeField] private int _maxStarsLeftNotActivated;
     [SerializeField] private GameObject _stegosaurus;
+    [SerializeField] private GameObject _sun;
     [SerializeField] private float _leaveEffectorStartForce;
     [SerializeField] private float _leaveEffectorMaxForce;
     [SerializeField] private float _leaveEffectorForceSpeed;
@@ -66,6 +66,7 @@ public class Constellation : MonoBehaviour
     private void StartFinish()
     {
         _stegosaurus.SetActive(true);
+        //_sun.SetActive(true);
         GameSession.Camera.Zoom = _finishCameraZoom;
         GameSession.Camera.ZoomSmoothTime = _finishCameraZoomTime;
         _leaveTime = Time.time + _delayBeforeLeave;

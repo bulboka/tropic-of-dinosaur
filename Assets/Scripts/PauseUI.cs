@@ -3,6 +3,8 @@ using UnityEngine;
 public class PauseUI : MonoBehaviour
 {
     [SerializeField] private AudioSource _music;
+    [SerializeField] private GameObject _regularView;
+    [SerializeField] private GameObject _gameOverView;
 
     public void Show()
     {
@@ -15,7 +17,14 @@ public class PauseUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
 #endif
 
-        _music.pitch = 0.4f;
+        _regularView.SetActive(!GameSession.IsGameOver);
+        _gameOverView.SetActive(GameSession.IsGameOver);
+
+        if (!GameSession.IsGameOver)
+        {
+            _music.pitch = 0.4f;
+        }
+
         Time.timeScale = 0;
     }
 

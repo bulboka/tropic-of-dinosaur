@@ -148,4 +148,9 @@ public class Hand : MonoBehaviour
         _maxForce = hand.MaxForce;
         _airbornForceMult = hand.AirbornForceMult;
     }
+
+    public void GoToLocator(Transform locator)
+    {
+        throw new System.NotImplementedException();
+    }
 }

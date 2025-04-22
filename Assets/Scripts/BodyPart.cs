@@ -1,5 +1,7 @@
-using System;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
+
 using UnityEngine;
 
 public class BodyPart : MonoBehaviour
@@ -85,6 +87,7 @@ public class BodyPart : MonoBehaviour
         }
     }
 
+#if UNITY_EDITOR
     private void OnValidate()
     {
         if (_rigidbody != null)
@@ -103,5 +106,27 @@ public class BodyPart : MonoBehaviour
 
         EditorUtility.SetDirty(gameObject);
         AssetDatabase.SaveAssetIfDirty(gameObject);
+    }
+#endif
+
+    public void DestroyPhysics()
+    {
+        if (_hingeJoint != null)
+        {
+            Destroy(_hingeJoint);
+            _hingeJoint = null;
+        }
+
+        if (_rigidbody != null)
+        {
+            Destroy(_rigidbody);
+            _rigidbody = null;
+        }
+
+        if (_collider != null)
+        {
+            Destroy(_collider);
+            _collider = null;
+        }
     }
 }
