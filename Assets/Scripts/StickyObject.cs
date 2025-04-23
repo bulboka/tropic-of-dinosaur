@@ -51,7 +51,12 @@ public class StickyObject : MonoBehaviour
 
         gameObject.layer = LayerMask.NameToLayer("StuckObject");
         //gameObject.tag = "StuckObject";
+
+        OnStuck();
     }
+
+    protected virtual void OnStuck()
+    {}
 
     public void Unstick()
     {

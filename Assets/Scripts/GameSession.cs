@@ -70,6 +70,17 @@ public class GameSession : MonoBehaviour
             {
                 SwitchBody(nearestSwitchBodyTrigger.BodyPrefab, true);
             }
+
+            var nearestSwitchHandTrigger =
+                FindObjectsByType<SwitchHandViewTrigger>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+                    .Where(trigger =>
+                        _cheatStartLocator.position.x - trigger.transform.position.x > 0).OrderBy(trigger =>
+                        (trigger.transform.position - _cheatStartLocator.position).sqrMagnitude).FirstOrDefault();
+
+            if (nearestSwitchHandTrigger != null)
+            {
+                nearestSwitchHandTrigger.SwitchHandView();
+            }
         }
 
         _startUI.Show();

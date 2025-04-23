@@ -15,6 +15,11 @@ public class SwitchHandViewTrigger : MonoBehaviour
 
         gameObject.SetActive(false);
 
+        SwitchHandView();
+    }
+
+    public void SwitchHandView()
+    {
         var suitableViews = _handViewPrefabs.Where(viewPrefab =>
                 viewPrefab.AvailableAtAges.Contains(GameSession.Age) &&
                 !GameSession.UsedHandViewPrefabs.Contains(viewPrefab))

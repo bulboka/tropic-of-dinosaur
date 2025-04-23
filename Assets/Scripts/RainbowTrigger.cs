@@ -23,6 +23,11 @@ public class RainbowTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (!other.gameObject.CompareTag("Body"))
+        {
+            return;
+        }
+
         var locatorIndex = 0;
 
         foreach (var collectible in GameSession.StuckObjects)
