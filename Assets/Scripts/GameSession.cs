@@ -215,7 +215,7 @@ public class GameSession : MonoBehaviour
             {
                 _pauseUI.Resume();
             }
-            else
+            else if (!_startUI.gameObject.activeSelf)
             {
                 _pauseUI.Show();
             }

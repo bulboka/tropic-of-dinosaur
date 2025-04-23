@@ -3,8 +3,8 @@ using UnityEngine;
 public class PauseUI : MonoBehaviour
 {
     [SerializeField] private AudioSource _music;
-    [SerializeField] private GameObject _regularView;
-    [SerializeField] private GameObject _gameOverView;
+    [SerializeField] private GameObject _thanksText;
+    [SerializeField] private GameObject _quitBtn;
 
     public void Show()
     {
@@ -17,8 +17,11 @@ public class PauseUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
 #endif
 
-        _regularView.SetActive(!GameSession.IsGameOver);
-        _gameOverView.SetActive(GameSession.IsGameOver);
+        _thanksText.SetActive(GameSession.IsGameOver);
+
+#if UNITY_WEBGL
+        _quitBtn.SetActive(false);
+#endif
 
         if (!GameSession.IsGameOver)
         {

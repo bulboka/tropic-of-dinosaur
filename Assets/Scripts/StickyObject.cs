@@ -30,6 +30,13 @@ public class StickyObject : MonoBehaviour
             Destroy(joint);
         }
 
+        var randomTorque = GetComponent<RandomTorque>();
+
+        if (randomTorque != null)
+        {
+            Destroy(randomTorque);
+        }
+
         _rigidbody.bodyType = RigidbodyType2D.Dynamic;
 
         _stickJoint = gameObject.AddComponent<FixedJoint2D>();
@@ -63,9 +70,15 @@ public class StickyObject : MonoBehaviour
         Destroy(_stickJoint);
         _stickJoint = null;
         _isStuck = false;
-        Destroy(_rigidbody);
         Destroy(_collider);
+        _rigidbody.bodyType = RigidbodyType2D.Kinematic;
 
-        transform.DOMove(locator.position, Random.Range(3f, 6f)).SetEase(Ease.Linear);
+        transform
+            .DOMove(locator.position, Random.Range(3f, 6f))
+            .SetEase(Ease.Linear)
+            .OnUpdate(() =>
+            {
+                _rigidbody.MovePosition(transform.position);
+            });
     }
 }

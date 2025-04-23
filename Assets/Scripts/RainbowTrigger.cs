@@ -16,6 +16,7 @@ public class RainbowTrigger : MonoBehaviour
     [SerializeField] private GameObject _slowdown;
     [SerializeField] private List<GameObject> _overlayEffects;
     [SerializeField] private float _overlayEffectPeriod;
+    [SerializeField] private Vector2 _defaultGravity;
 
     private bool _isOverlaySwitching;
     private float _nextOverlaySwitchTime;
@@ -64,6 +65,18 @@ public class RainbowTrigger : MonoBehaviour
         }
 
         GameSession.IsGameOver = true;
+
+        foreach (var heart in FindObjectsOfType<ChickenHeart>())
+        {
+            Destroy(heart.gameObject);
+        }
+
+        foreach (var skull in FindObjectsOfType<Skull>())
+        {
+            Destroy(skull.gameObject);
+        }
+
+        Physics2D.gravity = _defaultGravity;
     }
 
     private void Update()

@@ -19,6 +19,7 @@ public class Stub : MonoBehaviour
     [SerializeField] private float _lineWidthMin;
     [SerializeField] private float _lineWidthMax;
     [SerializeField] private float _minorStarScale;
+    [SerializeField] private List<Color> _minorStarColors;
 
     private bool _isMainStar;
     private MainStarLocator _mainStarLocator;
@@ -101,6 +102,10 @@ public class Stub : MonoBehaviour
         {
             transform.position = startLocator.position;
             transform.localScale = Vector3.one * _minorStarScale;
+
+            var spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            spriteRenderer.color = _minorStarColors[Random.Range(0, _minorStarColors.Count)];
+
             return;
         }
 
@@ -130,9 +135,9 @@ public class Stub : MonoBehaviour
                 var positions = new[] { transform.position, connectedLocator.AttachedStub.transform.position };
                 lineRenderer.positionCount = 2;
                 lineRenderer.SetPositions(positions);
-                //lineRenderer.startColor = lineRenderer.endColor = _lineColors[Random.Range(0, _lineColors.Count)];
+                lineRenderer.startColor = lineRenderer.endColor = _lineColors[Random.Range(0, _lineColors.Count)];
 
-                var randomColor = _lineColors[Random.Range(0, _lineColors.Count)];
+                /*var randomColor = _lineColors[Random.Range(0, _lineColors.Count)];
                 var gradient = lineRenderer.colorGradient;
 
                 for (var i = 0; i < gradient.colorKeys.Length; i++)
@@ -142,7 +147,7 @@ public class Stub : MonoBehaviour
                     gradient.colorKeys[i] = colorKey;
                 }
 
-                lineRenderer.colorGradient = gradient;
+                lineRenderer.colorGradient = gradient;*/
 
                 lineRenderer.widthMultiplier = Random.Range(_lineWidthMin, _lineWidthMax);
 

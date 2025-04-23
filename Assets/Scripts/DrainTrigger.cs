@@ -29,6 +29,16 @@ public class DrainTrigger : MonoBehaviour
 
         var bodyFire = Instantiate(_bodyFirePrefab);
         bodyFire.Target = GameSession.Body.FireLocator;
+
+        foreach (var heart in FindObjectsOfType<ChickenHeart>())
+        {
+            Destroy(heart.gameObject);
+        }
+
+        foreach (var skull in FindObjectsOfType<Skull>())
+        {
+            Destroy(skull.gameObject);
+        }
     }
 
     private void Update()

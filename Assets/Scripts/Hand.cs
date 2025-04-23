@@ -52,6 +52,12 @@ public class Hand : MonoBehaviour
         set => _airbornForceMult = value;
     }
 
+    public float MaxDistanceFromCamera
+    {
+        get => _maxDistanceFromCamera;
+        set => _maxDistanceFromCamera = value;
+    }
+
     public void Initialize(Body body)
     {
         _body = body;

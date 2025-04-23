@@ -13,6 +13,11 @@ public class Tangerine : MonoBehaviour
     [SerializeField] private Vector3 _cameraShiftFinish;
     [SerializeField] private AnimationCurve _factorCurve;
 
+    private void Start()
+    {
+        GameSession.Hand.MaxDistanceFromCamera = 20f;
+    }
+
     private void Update()
     {
         var progress = Mathf.Clamp01((transform.position.x - _startLocator.position.x) /
