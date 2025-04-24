@@ -9,6 +9,7 @@ public class StartUI : MonoBehaviour
     {
         if (Input.anyKeyDown || Input.GetMouseButtonDown(0))
         {
+            Debug.Log($"StartUI.Input at {Time.time}");
             Complete();
         }
     }
@@ -20,6 +21,7 @@ public class StartUI : MonoBehaviour
 
     private void Complete()
     {
+        Debug.Log($"StartUI.Complete at {Time.time}");
         gameObject.SetActive(false);
         OnComplete?.Invoke();
     }
