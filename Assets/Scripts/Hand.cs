@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Hand : MonoBehaviour
 {
@@ -89,8 +90,12 @@ public class Hand : MonoBehaviour
             return;
         }
 
-        var inputX = Input.GetAxisRaw("Mouse X") * MouseSensitivity;
-        var inputY = Input.GetAxisRaw("Mouse Y") * MouseSensitivity;
+        var mouseDelta = Mouse.current.delta.ReadValue();
+
+        Debug.Log(mouseDelta);
+
+        var inputX = mouseDelta.x * MouseSensitivity;
+        var inputY = mouseDelta.y * MouseSensitivity;
 
         _desiredPosition = new Vector3(_desiredPosition.x + inputX, _desiredPosition.y + inputY, 0);
 

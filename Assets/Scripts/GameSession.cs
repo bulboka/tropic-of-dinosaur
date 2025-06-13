@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public enum Age { Baby, Child, Adult, Fat, Old }
@@ -16,6 +17,7 @@ public class GameSession : MonoBehaviour
     [SerializeField] private ChickenHeartsManager _chickenHeartsManager;
     [SerializeField] private SkullManager _skullManager;
     [SerializeField] private PauseUI _pauseUI;
+    [SerializeField] private TextMeshProUGUI _debugText;
 
     private static GameSession _instance;
     private bool _isTimeCheatActive;
@@ -50,14 +52,16 @@ public class GameSession : MonoBehaviour
     {
         _instance = this;
 
+#if DEV
         if (_useCheatStartLocator)
         {
             _body.transform.position = _cheatStartLocator.position;
         }
-
+#endif
         _body.Initialize();
         _hand.IsInputEnabled = false;
 
+#if DEV
         if (_useCheatStartLocator)
         {
             var nearestSwitchBodyTrigger =
@@ -82,27 +86,24 @@ public class GameSession : MonoBehaviour
                 nearestSwitchHandTrigger.SwitchHandView();
             }
         }
+#endif
 
         _startUI.Show();
         _startUI.OnComplete += OnStartUIComplete;
         _chickenHeartsManager.Initialize();
 
-#if UNITY_EDITOR
-
-#else
+#if !UNITY_EDITOR && !UNITY_WEBGL
         Screen.SetResolution(1600, 1200, FullScreenMode.FullScreenWindow);
 #endif
     }
 
     private void OnStartUIComplete()
     {
+        Debug.Log($"GameSession.OnStartUIComplete at {Time.time}");
         _startUI.OnComplete -= OnStartUIComplete;
 
-#if UNITY_EDITOR
-
-#else
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+#if !UNITY_EDITOR && UNITY_WEBGL
+        GoFullscreen();
 #endif
 
         _hand.IsInputEnabled = true;
@@ -214,11 +215,35 @@ public class GameSession : MonoBehaviour
 
     private void Update()
     {
+#if DEV
         if (Input.GetKeyDown(KeyCode.T))
         {
             _isTimeCheatActive = !_isTimeCheatActive;
             Time.timeScale = _isTimeCheatActive ? 10f : 1f;
         }
+#endif
+
+        _debugText.text =
+            $"Cursor.lockState: {Cursor.lockState}\nCursor.visible: {Cursor.visible}\nApplication.isFocused: {Application.isFocused}\nScreen.fullScreen:{Screen.fullScreen}";
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        if (!_startUI.gameObject.activeSelf && !_pauseUI.gameObject.activeSelf)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        /*if (!Screen.fullScreen)
+        {
+            _pauseUI.Show();
+        }*/
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            GoFullscreen();
+        }
+#endif
+
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -230,6 +255,28 @@ public class GameSession : MonoBehaviour
             {
                 _pauseUI.Show();
             }
+        }
+    }
+
+#if UNITY_WEBGL
+    /*private void OnApplicationFocus(bool hasFocus)
+    {
+        if (hasFocus)
+        {
+            GoFullscreen();
+        }
+    }*/
+#endif
+
+    private void GoFullscreen()
+    {
+        //Screen.SetResolution(1600, 1200, FullScreenMode.FullScreenWindow);
+        Screen.fullScreen = true;
+
+        if (!_startUI.gameObject.activeSelf && !_pauseUI.gameObject.activeSelf)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 }
