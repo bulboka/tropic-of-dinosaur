@@ -28284,7 +28284,7 @@ GameObject:
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &343659182
 Transform:
   m_ObjectHideFlags: 0
@@ -75476,7 +75476,7 @@ Transform:
   m_GameObject: {fileID: 942526657}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 371.47, y: -165.95, z: -0.25}
+  m_LocalPosition: {x: 456.2, y: -164.1, z: -0.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -144032,7 +144032,7 @@ MonoBehaviour:
   _music: {fileID: 1815983067}
   _startUI: {fileID: 1818785377}
   _camera: {fileID: 1956089222}
-  _useCheatStartLocator: 0
+  _useCheatStartLocator: 1
   _cheatStartLocator: {fileID: 942526658}
   _chickenHeartsManager: {fileID: 1881337097}
   _skullManager: {fileID: 1979007312}
@@ -160037,6 +160037,7 @@ MonoBehaviour:
   - {fileID: 1325603199}
   - {fileID: 375843864}
   _suckerEffector: {fileID: 1920526987}
+  _finishSuckingTrigger: {fileID: 343659181}
 --- !u!4 &1979007313
 Transform:
   m_ObjectHideFlags: 0

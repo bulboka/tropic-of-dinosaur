@@ -15,6 +15,7 @@ public class SkullManager : MonoBehaviour
     [SerializeField] private float _suckerLocatorMinDistance;
     [SerializeField] private List<GameObject> _grounds;
     [SerializeField] private GameObject _suckerEffector;
+    [SerializeField] private GameObject _finishSuckingTrigger;
 
     private int _nextSkullPrefabIndex;
     private float _nextSkullSpawnTime = -1;
@@ -107,6 +108,7 @@ public class SkullManager : MonoBehaviour
         _funnelSeal.SetActive(false);
         _suckerEffector.SetActive(true);
         _isSucking = true;
+        _finishSuckingTrigger.SetActive(true);
         _nextSkullSpawnTime = -1;
 
         var layer = LayerMask.NameToLayer("GroundSlipery");
