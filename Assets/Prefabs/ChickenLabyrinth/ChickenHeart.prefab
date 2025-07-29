@@ -207,7 +207,7 @@ MonoBehaviour:
   _moveFreeFollowForce: 180
   _randomRadius: 1.5
   _randomRadiusFreeFollow: 4
-  _freeFollowLiftingForce: 21000
+  _freeFollowLiftingForce: 90000
   _wheelTorque: 24
   _specialMoveForce: 90
   _specialMoveFastForce: 180
