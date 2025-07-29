@@ -88,7 +88,7 @@ public class GameSession : MonoBehaviour
 #endif
 
         _startUI.Show();
-        _startUI.OnComplete += OnStartUIComplete;
+        //_startUI.OnComplete += OnStartUIComplete;
         _chickenHeartsManager.Initialize();
 
 #if !UNITY_EDITOR && !UNITY_WEBGL
@@ -96,16 +96,16 @@ public class GameSession : MonoBehaviour
 #endif
     }
 
-    private void OnStartUIComplete()
+    public static void OnStartUIComplete()
     {
-        _startUI.OnComplete -= OnStartUIComplete;
+        //_startUI.OnComplete -= OnStartUIComplete;
 
 #if !UNITY_EDITOR && UNITY_WEBGL
-        GoFullscreen();
+        _instance.GoFullscreen();
 #endif
 
-        _hand.IsInputEnabled = true;
-        _music.Play();
+        _instance._hand.IsInputEnabled = true;
+        _instance._music.Play();
     }
 
     public static void SwitchBody(Body bodyPrefab, bool fast = false)
@@ -234,17 +234,17 @@ public class GameSession : MonoBehaviour
         }
     }
 
-#if UNITY_WEBGL
-    private void OnApplicationFocus(bool hasFocus)
+#if !UNITY_EDITOR && UNITY_WEBGL
+    /*private void OnApplicationFocus(bool hasFocus)
     {
         if (hasFocus)
         {
             GoFullscreen();
         }
-    }
+    }*/
 #endif
 
-    private void GoFullscreen()
+    public void GoFullscreen()
     {
         //Screen.SetResolution(1600, 1200, FullScreenMode.FullScreenWindow);
         Screen.fullScreen = true;

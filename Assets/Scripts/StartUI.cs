@@ -3,27 +3,49 @@ using UnityEngine;
 
 public class StartUI : MonoBehaviour
 {
+    [SerializeField] private GameObject _focusContent;
+    [SerializeField] private GameObject _startContent;
+
     public Action OnComplete;
+    private bool _isFocused;
 
     private void Update()
     {
         if (Input.anyKeyDown || Input.GetMouseButtonDown(0))
         {
             Debug.Log($"StartUI.Input at {Time.time}");
-            Complete();
+            TryComplete();
         }
     }
 
     public void Show()
     {
+        _focusContent.SetActive(true);
+        _startContent.SetActive(false);
         gameObject.SetActive(true);
     }
 
-    private void Complete()
+    private void TryComplete()
     {
-        Debug.Log($"StartUI.Complete at {Time.time}");
+        Debug.Log($"StartUI.TryComplete at {Time.time}");
+
+#if UNITY_WEBGL
+        if (!_isFocused)
+        {
+            _isFocused = true;
+            //Cursor.visible = false;
+            //Cursor.lockState = CursorLockMode.Locked;
+            Screen.fullScreen = true;
+            _focusContent.SetActive(false);
+            _startContent.SetActive(true);
+
+            return;
+        }
+#endif
+
         gameObject.SetActive(false);
         OnComplete?.Invoke();
+        GameSession.OnStartUIComplete();
     }
 
 #if UNITY_WEBGL
@@ -31,7 +53,7 @@ public class StartUI : MonoBehaviour
     {
         if (gameObject.activeSelf && hasFocus)
         {
-            Complete();
+            TryComplete();
         }
     }
 #endif
