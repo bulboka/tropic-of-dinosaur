@@ -17,6 +17,7 @@ public class RainbowTrigger : MonoBehaviour
     [SerializeField] private List<GameObject> _overlayEffects;
     [SerializeField] private float _overlayEffectPeriod;
     [SerializeField] private Vector2 _defaultGravity;
+    [SerializeField] private GameObject _goodbyeText;
 
     private bool _isOverlaySwitching;
     private float _nextOverlaySwitchTime;
@@ -42,6 +43,7 @@ public class RainbowTrigger : MonoBehaviour
         _sittingBody.SetActive(true);
         GameSession.Camera.SetTarget(_cameraTarget);
         GameSession.Camera.SmoothTime = 2.5f;
+        _goodbyeText.SetActive(true);
 
         _slowdown.SetActive(false);
 

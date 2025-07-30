@@ -8,6 +8,11 @@ public class HandForceTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Apply();
+    }
+
+    public void Apply()
+    {
         gameObject.SetActive(false);
         GameSession.Hand.MinForce = _minForce;
         GameSession.Hand.MaxForce = _maxForce;

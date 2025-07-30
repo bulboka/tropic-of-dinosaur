@@ -84,6 +84,17 @@ public class GameSession : MonoBehaviour
             {
                 nearestSwitchHandTrigger.SwitchHandView();
             }
+
+            var nearestHandForceTrigger =
+                FindObjectsByType<HandForceTrigger>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+                    .Where(trigger =>
+                        _cheatStartLocator.position.x - trigger.transform.position.x > 0).OrderBy(trigger =>
+                        (trigger.transform.position - _cheatStartLocator.position).sqrMagnitude).FirstOrDefault();
+
+            if (nearestHandForceTrigger != null)
+            {
+                nearestHandForceTrigger.Apply();
+            }
         }
 #endif
 
