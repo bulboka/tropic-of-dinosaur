@@ -24614,10 +24614,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: thank you for playing
+  m_text: "\u0441\u043F\u0430\u0441\u0438\u0431\u043E \u0437\u0430 \u0438\u0433\u0440\u0443"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 88f807fd3c43e99439e42f70355ba80a, type: 2}
-  m_sharedMaterial: {fileID: -664002229128258749, guid: 88f807fd3c43e99439e42f70355ba80a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3b0cbecd020171a4c898b91fbbb16cb1, type: 2}
+  m_sharedMaterial: {fileID: 5158235580382611970, guid: 3b0cbecd020171a4c898b91fbbb16cb1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -79161,7 +79161,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8364510236115642088, guid: 94dd2003b6226fe4e9ab8e556909d79f, type: 3}
       propertyPath: m_text
-      value: quit
+      value: "\u0432\u044B\u0439\u0442\u0438"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8364510236115642088, guid: 94dd2003b6226fe4e9ab8e556909d79f, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 3b0cbecd020171a4c898b91fbbb16cb1, type: 2}
+    - target: {fileID: 8364510236115642088, guid: 94dd2003b6226fe4e9ab8e556909d79f, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5158235580382611970, guid: 3b0cbecd020171a4c898b91fbbb16cb1, type: 2}
+    - target: {fileID: 8364510236115642088, guid: 94dd2003b6226fe4e9ab8e556909d79f, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8399462610964409253, guid: 94dd2003b6226fe4e9ab8e556909d79f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -119288,14 +119300,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'click to start
-
-    move mouse to play
-
-    esc to pause and quit'
+  m_text: "\u043A\u043B\u0438\u043A\u043D\u0438 \u043C\u044B\u0448\u043A\u043E\u0439,
+    \u0447\u0442\u043E\u0431\u044B \u043D\u0430\u0447\u0430\u0442\u044C \u0438\u0433\u0440\u0443\n\u0438\u0433\u0440\u0430
+    \u0443\u043F\u0440\u0430\u0432\u043B\u044F\u0435\u0442\u0441\u044F \u0434\u0432\u0438\u0436\u0435\u043D\u0438\u0435\u043C
+    \u043C\u044B\u0448\u0438\nescape \u0434\u043B\u044F \u043F\u0430\u0443\u0437\u044B
+    \u0438 \u0432\u044B\u0445\u043E\u0434\u0430 \u0438\u0437 \u0438\u0433\u0440\u044B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 88f807fd3c43e99439e42f70355ba80a, type: 2}
-  m_sharedMaterial: {fileID: -664002229128258749, guid: 88f807fd3c43e99439e42f70355ba80a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3b0cbecd020171a4c898b91fbbb16cb1, type: 2}
+  m_sharedMaterial: {fileID: 5158235580382611970, guid: 3b0cbecd020171a4c898b91fbbb16cb1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -119331,7 +119343,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: 38.58
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -144369,7 +144381,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8364510236115642088, guid: 94dd2003b6226fe4e9ab8e556909d79f, type: 3}
       propertyPath: m_text
-      value: resume
+      value: "\u043F\u0440\u043E\u0434\u043E\u043B\u0436\u0438\u0442\u044C"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8364510236115642088, guid: 94dd2003b6226fe4e9ab8e556909d79f, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 3b0cbecd020171a4c898b91fbbb16cb1, type: 2}
+    - target: {fileID: 8364510236115642088, guid: 94dd2003b6226fe4e9ab8e556909d79f, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5158235580382611970, guid: 3b0cbecd020171a4c898b91fbbb16cb1, type: 2}
+    - target: {fileID: 8364510236115642088, guid: 94dd2003b6226fe4e9ab8e556909d79f, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8399462610964409253, guid: 94dd2003b6226fe4e9ab8e556909d79f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -162001,7 +162025,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2002047722
 RectTransform:
   m_ObjectHideFlags: 0
