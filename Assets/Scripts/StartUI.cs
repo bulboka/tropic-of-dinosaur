@@ -20,8 +20,14 @@ public class StartUI : MonoBehaviour
 
     public void Show()
     {
+#if UNITY_WEBGL
         _focusContent.SetActive(true);
         _startContent.SetActive(false);
+#else
+        _focusContent.SetActive(false);
+        _startContent.SetActive(true);
+#endif
+        
         gameObject.SetActive(true);
     }
 

@@ -111,7 +111,7 @@ public class GameSession : MonoBehaviour
     {
         //_startUI.OnComplete -= OnStartUIComplete;
 
-#if !UNITY_EDITOR && UNITY_WEBGL
+#if !UNITY_EDITOR
         _instance.GoFullscreen();
 #endif
 
