@@ -20,7 +20,7 @@ public class StartUI : MonoBehaviour
 
     public void Show()
     {
-#if UNITY_WEBGL
+#if UNITY_WEBGL && SHOW_FOCUS_SCREEN
         _focusContent.SetActive(true);
         _startContent.SetActive(false);
 #else
@@ -35,7 +35,7 @@ public class StartUI : MonoBehaviour
     {
         Debug.Log($"StartUI.TryComplete at {Time.time}");
 
-#if UNITY_WEBGL
+#if UNITY_WEBGL && SHOW_FOCUS_SCREEN
         if (!_isFocused)
         {
             _isFocused = true;

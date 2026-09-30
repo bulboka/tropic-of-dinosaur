@@ -232,7 +232,7 @@ public class GameSession : MonoBehaviour
         }
 #endif
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Escape))
         {
             if (_pauseUI.gameObject.activeSelf)
             {
@@ -258,7 +258,9 @@ public class GameSession : MonoBehaviour
     public void GoFullscreen()
     {
         //Screen.SetResolution(1600, 1200, FullScreenMode.FullScreenWindow);
+#if  SHOW_FOCUS_SCREEN
         Screen.fullScreen = true;
+#endif
 
         if (!_startUI.gameObject.activeSelf && !_pauseUI.gameObject.activeSelf)
         {

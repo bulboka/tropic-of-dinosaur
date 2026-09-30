@@ -119292,7 +119292,7 @@ MonoBehaviour:
 
     move mouse to play
 
-    esc to pause and quit'
+    space to pause and quit'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 88f807fd3c43e99439e42f70355ba80a, type: 2}
   m_sharedMaterial: {fileID: -664002229128258749, guid: 88f807fd3c43e99439e42f70355ba80a, type: 2}
